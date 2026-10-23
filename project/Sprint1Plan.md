@@ -6,33 +6,31 @@
 
 | Field | Your answer |
 | --- | --- |
-| Team name | [Team name] |
-| Team members | [Name 1], [Name 2], [Name 3], [Name 4] , [Name 5], [Name 6]|
-| Project | [Project name] |
+| Team name | Team 2 |
+| Team members | Madison Jones, [Name 2], [Name 3], [Name 4] , [Name 5], [Name 6]|
+| Project | Bugs vs. Aliens |
 | Sprint | Sprint 1 |
-| Sprint start date | [YYYY-MM-DD] |
-| Sprint end date (demo day) | [YYYY-MM-DD] |
-| GitHub Projects link | [Paste the link to your GitHub Project] |
+| Sprint start date | 2026-10-23 |
+| Sprint end date (demo day) | 2026-10-30 |
+| GitHub Projects link | https://github.com/users/chaoaj/projects/6 |
 
 ## 1. Sprint Goal
 
-✏️ *Summarize in one or two sentences what your team will accomplish this week. It must be achievable in one week and something you can demonstrate to stakeholders at the end of the sprint, even if that is only a blank frame with the app name at the top.*
+✏️ Our team will work to create the board that players will use. The players will later be able to use the board to place towers.
 
 **Sprint Goal:**
 
-[Write your Sprint Goal here.]
+To create a 5x10 board
 
 ### 1.1 Value to Stakeholders
 
-✏️ *Explain who benefits from this goal and why it matters to them.*
-
-[Describe the value this sprint delivers to stakeholders.]
+Players benefit from this goal because it provides a foundation for them to be able to play our game.
 
 ### 2. GitHub Projects Setup Checklist
 
 ✏️ *Check each box once it is done in GitHub Projects. Change `[ ]` to `[x]`.*
 
-- [ ] Created a new Sprint (iteration) named "Sprint 1" in GitHub Projects
+- [x] Created a new Sprint (iteration) named "Sprint 1" in GitHub Projects
 - [ ] Moved every Sprint Backlog Item into Sprint 1
 - [ ] Every Sprint Backlog Item has a story-point estimate
 - [ ] Every Sprint Backlog Item has acceptance criteria
@@ -69,9 +67,9 @@
 
 This example shows one completed Sprint Backlog Item.
 
-### Item 1: Application logo
+### Item 1: Board
 
-**User story:** As a user, I want the app to display an application logo at the top of the screen so that I know which app I am using.
+**User story:** As a user, I want the game to display a board that I will be using to place towers.
 
 **Story points:** 2
 
@@ -79,8 +77,8 @@ This example shows one completed Sprint Backlog Item.
 
 **Acceptance criteria:**
 
-1. As a user, I can see an application logo at the top of the screen.
-2. The logo has alternative text that names the app.
+1. As a user, I can see the board that I will be playing on.
+2. The board has 5x10 dimensions
 
 **Tasks:**
 

@@ -7,7 +7,7 @@
 | Field | Your answer |
 | --- | --- |
 | Team name | Team 2 |
-| Team members | Madison Jones, [Name 2], [Name 3], [Name 4] , [Name 5], [Name 6]|
+| Team members | Madison Jones, Kevin Bermingham, [Name 3], [Name 4] , [Name 5], [Name 6]|
 | Project | Bugs vs. Aliens |
 | Sprint | Sprint 1 |
 | Sprint start date | 2026-10-23 |

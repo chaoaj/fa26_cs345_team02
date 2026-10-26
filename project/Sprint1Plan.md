@@ -84,8 +84,8 @@ This example shows one completed Sprint Backlog Item.
 
 | Task | Estimate (hours) | Assigned to |
 | --- | --- | --- |
-| Create logo artwork | 2 | Clark Kent |
-| Write code to display the logo | 1 | Diana Prince |
+| Create board image/sprite | 2 | Clark Kent |
+| Write code to store what's on the board in usable data | 1 | Diana Prince |
 | Review code | 1 | Bruce Wayne |
 | **Total for this item** | **4** | |
 

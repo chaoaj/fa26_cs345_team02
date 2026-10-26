@@ -86,6 +86,7 @@ This example shows one completed Sprint Backlog Item.
 | --- | --- | --- |
 | Create board image/sprite | 2 | Clark Kent |
 | Write code to store what's on the board in usable data | 1 | Diana Prince |
+| Make a tower show on a piece of the board, sprite doesn't have to be final | 1 | Diana Prince |
 | Review code | 1 | Bruce Wayne |
 | **Total for this item** | **4** | |
 

@@ -1,4 +1,4 @@
-# Sprint N Plan
+# Sprint 1 Plan
 
 > **How to use this template:** Copy this to a SprintNPlan.md (i.e. Sprint1Plan.md).  Replace every `[bracketed placeholder]` with your team's information. Delete the instruction lines (they start with ✏️) before you submit. Copy the "Sprint Backlog Item" section once for each item in your sprint.
 
@@ -16,7 +16,7 @@
 
 ## 1. Sprint Goal
 
-✏️ Our team will work to create the board that players will use. The players will later be able to use the board to place towers.
+Our team will work to create the board that players will use. The players will later be able to use the board to place towers.
 
 **Sprint Goal:**
 
@@ -61,33 +61,3 @@ Players benefit from this goal because it provides a foundation for them to be a
 | **Team total** | **[count]** | **[hrs]** |
 
 **Is the work split fairly?** [Yes / No. If not, explain why, for example "Name 2 has fewer hours because they are also setting up the repository."]
-
-## ============================================================================
-## Example (delete before submitting)
-
-This example shows one completed Sprint Backlog Item.
-
-### Item 1: Board
-
-**User story:** As a user, I want the game to display a board that I will be using to place towers.
-
-**Story points:** 2
-
-**GitHub issue:** #4
-
-**Acceptance criteria:**
-
-1. As a user, I can see the board that I will be playing on.
-2. The board has 5x10 dimensions
-
-**Tasks:**
-
-| Task | Estimate (hours) | Assigned to |
-| --- | --- | --- |
-| Create board image/sprite | 2 | Clark Kent |
-| Write code to store what's on the board in usable data | 1 | Diana Prince |
-| Make a tower show on a piece of the board, sprite doesn't have to be final | 1 | Diana Prince |
-| Review code | 1 | Bruce Wayne |
-| **Total for this item** | **4** | |
-
-These tasks are enough to complete the item, and each one can be done independently.

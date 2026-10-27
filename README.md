@@ -2,6 +2,14 @@
 
 Our team's p5.js game! New to coding websites? Start here. 💚
 
+## 🤝 Meet Team 2
+
+- Madison Jones
+- Kevin Bermingham
+- Daniel Colman
+- Sean Nguyen
+- Nathaniel Amazigo
+
 ## 🌱 1. Install the basics — just once
 
 - **[Node.js 24 LTS](https://nodejs.org/en/download):** choose version **24**, your

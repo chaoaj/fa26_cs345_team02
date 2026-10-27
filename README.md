@@ -1,5 +1,9 @@
 # 🐛 Bugs vs. Aliens 👾
 
+[Chao] - Dev url: https://chaoaj.github.io/fa26_cs345_team02/index-dev.html
+Production url should be: https://chaoaj.github.io/fa26_cs345_team02/ 
+This game should be using p5.js only and be deployed above
+-----
 Our team's p5.js game! New to coding websites? Start here. 💚
 
 ## 🤝 Meet Team 2

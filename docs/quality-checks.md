@@ -29,7 +29,8 @@ fails stops the commit or push, leaving your changes available to fix and retry.
 - **Push:** the full `npm run verify` gate runs. Chromium must be installed.
   Tests use their own server on port 8081, so your game can keep running on 8080.
 - **GitHub:** the Quality workflow runs on pushes and pull requests using `npm ci`.
-  Failed browser tests upload traces in the workflow's artifacts.
+  It uses Chrome preinstalled on GitHub's Ubuntu 24.04 runner, avoiding browser
+  and OS package downloads. Failed tests upload traces in the workflow's artifacts.
 
 `npm ci` activates hooks through the `prepare` script. Run `npm run prepare` if
 hooks need reinstalling. Node/npm must be on the PATH used by your Git client;
@@ -40,6 +41,8 @@ Browser installation and tests use `scripts/playwright.mjs` to store Chromium
 in the ignored `.cache/ms-playwright/` folder inside this project. This keeps
 terminal and GitHub Desktop runs consistent. Run `npm run setup:browsers` after
 cloning or updating Playwright. Do not commit the downloaded browser files.
+CI selects the installed Chrome channel with `PLAYWRIGHT_CHANNEL=chrome`;
+local runs use the pinned Chromium download by default.
 
 On Windows, both hooks use `npm.cmd` so GitHub Desktop does not accidentally
 launch WSL through npm's Bash wrapper. macOS and Linux use `npm` as usual.

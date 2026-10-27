@@ -14,10 +14,12 @@ concurrency:
 jobs:
   quality:
     name: Lint, types, and browser tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       HUSKY: 0
+      # GitHub's runner already includes Chrome and its system dependencies.
+      PLAYWRIGHT_CHANNEL: chrome
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -26,7 +28,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
-      - run: npm run setup:browsers -- --with-deps
       - run: npm test
       - uses: actions/upload-artifact@v7
         if: failure()

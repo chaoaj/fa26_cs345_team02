@@ -1,0 +1,6 @@
+# The Windows npm shell wrapper requires Bash; use its native launcher instead.
+if [ "${OS-}" = "Windows_NT" ]; then
+  npm.cmd run verify
+else
+  npm run verify
+fi

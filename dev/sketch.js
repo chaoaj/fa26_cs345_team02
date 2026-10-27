@@ -1,7 +1,4 @@
-function setup() {
-  createCanvas(400, 400);
-}
+import { createGame } from "../src/game.js";
 
-function draw() {
-  background(220);
-}
+// Development uses the same game code as production.
+export const game = createGame();

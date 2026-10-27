@@ -1,7 +1,4 @@
-function setup() {
-  createCanvas(400, 400);
-}
+import { createGame } from "./src/game.js";
 
-function draw() {
-  background(220);
-}
+// The main entry point: import the game, then start it.
+export const game = createGame();

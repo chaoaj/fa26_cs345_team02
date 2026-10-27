@@ -1,0 +1,10 @@
+libraries/
+dev/libraries/
+node_modules/
+.cache/
+playwright-report/
+test-results/
+blob-report/
+coverage/
+package-lock.json
+project/

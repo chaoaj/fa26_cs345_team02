@@ -26,7 +26,7 @@ Already installed these? Skip ahead!
 node --version
 npm --version
 npm ci
-npx playwright install chromium
+npm run setup:browsers
 ```
 
 The first two commands should print version numbers; Node should start with `v24.`.
@@ -85,8 +85,8 @@ on your pull request. If something fails, fix it and try again.
 | npm can't find `package.json`        | Open the cloned project folder in VS Code, then create a new terminal.                  |
 | Formatting check failed              | Run `npm run format`, review the changes, and retry.                                    |
 | Lint or type check failed            | Read the filename and line number in the error. Fix that line; ask a teammate if stuck. |
-| Browser executable is missing        | Run `npx playwright install chromium` again.                                            |
+| Browser executable is missing        | Run `npm run setup:browsers` again.                                                     |
 | Port 8080 is already in use          | Stop the other `npm start` terminal with Ctrl+C, then retry.                            |
-| Tools changed after pulling          | Run `npm ci` and `npx playwright install chromium` again.                               |
+| Tools changed after pulling          | Run `npm ci` and `npm run setup:browsers` again.                                        |
 
 Need the technical details? See [our checks guide](docs/quality-checks.md).

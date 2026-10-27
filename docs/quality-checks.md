@@ -5,16 +5,17 @@ are development tools; the deployed game does not need a Node server or build.
 
 ## Commands
 
-| Command             | Purpose                                                 |
-| ------------------- | ------------------------------------------------------- |
-| `npm start`         | Serve the game locally on port 8080                     |
-| `npm run check`     | Check formatting, lint, and types without editing files |
-| `npm run verify`    | Run all checks and browser tests                        |
-| `npm run format`    | Apply consistent formatting                             |
-| `npm run lint:fix`  | Apply available lint fixes                              |
-| `npm run typecheck` | Strictly type-check both game folders                   |
-| `npm test`          | Run Chromium smoke tests                                |
-| `npm run test:ui`   | Open the interactive browser test runner                |
+| Command                  | Purpose                                                 |
+| ------------------------ | ------------------------------------------------------- |
+| `npm start`              | Serve the game locally on port 8080                     |
+| `npm run check`          | Check formatting, lint, and types without editing files |
+| `npm run verify`         | Run all checks and browser tests                        |
+| `npm run format`         | Apply consistent formatting                             |
+| `npm run lint:fix`       | Apply available lint fixes                              |
+| `npm run typecheck`      | Strictly type-check both game folders                   |
+| `npm test`               | Run Chromium smoke tests                                |
+| `npm run setup:browsers` | Install the browser used by the tests                   |
+| `npm run test:ui`        | Open the interactive browser test runner                |
 
 ## What runs automatically
 
@@ -33,7 +34,12 @@ fails stops the commit or push, leaving your changes available to fix and retry.
 `npm ci` activates hooks through the `prepare` script. Run `npm run prepare` if
 hooks need reinstalling. Node/npm must be on the PATH used by your Git client;
 restart GitHub Desktop after installing Node. On Linux, browser setup may require
-`npx playwright install --with-deps chromium`.
+`npm run setup:browsers -- --with-deps`.
+
+Browser installation and tests use `scripts/playwright.mjs` to store Chromium
+in the ignored `.cache/ms-playwright/` folder inside this project. This keeps
+terminal and GitHub Desktop runs consistent. Run `npm run setup:browsers` after
+cloning or updating Playwright. Do not commit the downloaded browser files.
 
 On Windows, both hooks use `npm.cmd` so GitHub Desktop does not accidentally
 launch WSL through npm's Bash wrapper. macOS and Linux use `npm` as usual.

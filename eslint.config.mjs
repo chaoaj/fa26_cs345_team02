@@ -7,6 +7,7 @@ export default [
     ignores: [
       "**/libraries/**",
       "node_modules/**",
+      ".cache/**",
       "playwright-report/**",
       "test-results/**",
       "blob-report/**",

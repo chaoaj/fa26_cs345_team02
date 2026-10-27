@@ -21,7 +21,7 @@ jobs:
       # GitHub's runner already includes Chrome and its system dependencies.
       PLAYWRIGHT_CHANNEL: chrome
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc

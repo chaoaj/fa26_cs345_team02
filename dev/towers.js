@@ -2,7 +2,8 @@
 
 // Attacker
 const BASIC_ATTACKER_NAME = ""; // replace with real tower name
-const BASIC_ATTACKER_SPRITE = "" // replace with sprite file
+const BASIC_ATTACKER_SPRITE = ""; // replace with sprite file
+const BASIC_ATTACKER_DESCRIPTION = "A basic offensive tower that shoots projectiles at incoming enemies.";
 
 const BASIC_ATTACKER_ENERGY_COST_BASE = 5; // the starting energy cost
 let basicAttackerEnergyCostLevel = 0; // the "level" of the energy cost stat, which you can level up with Gold at the end of a round
@@ -25,11 +26,19 @@ let basicAttackerProjectileFireRateLevel = 0;
 let basicAttackerProjectileFireRate = BASIC_ATTACKER_PROJECTILE_FIRERATE_BASE + basicAttackerProjectileFireRateLevel;
 
 // Blocker
+const BASIC_BLOCKER_NAME = ""; // replace with real tower name
+const BASIC_BLOCKER_SPRITE = ""; // replace with sprite file
+const BASIC_BLOCKER_DESCRIPTION = "A basic defensive tower that stops enemies in their tracks.";
+
 const BASIC_BLOCKER_DURABILITY_BASE = 10; // the base durability
 let basicBlockerDurabilityLevel = 0;
 let basicBlockerDurability = BASIC_BLOCKER_DURABILITY_BASE + basicBlockerDurabilityLevel;
 
 // Economy
+const BASIC_ECO_NAME = ""; // replace with real tower name
+const BASIC_ECO_SPRITE = ""; // replace with sprite file
+const BASIC_ECO_DESCRIPTION = "Generates energy that you can use to place more towers.";
+
 const BASIC_ECO_DURABILITY_BASE = 2; // the base durability
 let basicEcoDurabilityLevel = 0;
 let basicEcoDurability = BASIC_ECO_DURABILITY_BASE + basicEcoDurabilityLevel;

@@ -21,9 +21,9 @@ const BASIC_ATTACKER_PROJECTILE_SPEED_BASE = 1; //the base speed of the projecti
 let basicAttackerProjectileSpeedLevel = 0;
 let basicAttackerProjectileSpeed = BASIC_ATTACKER_PROJECTILE_SPEED_BASE + basicAttackerProjectileSpeedLevel;
 
-const BASIC_ATTACKER_PROJECTILE_FIRERATE_BASE = 1; //the base firerate of the projectile
+const BASIC_ATTACKER_PROJECTILE_FIRE_RATE_BASE = 1; //the base fire rate of the projectile
 let basicAttackerProjectileFireRateLevel = 0;
-let basicAttackerProjectileFireRate = BASIC_ATTACKER_PROJECTILE_FIRERATE_BASE + basicAttackerProjectileFireRateLevel;
+let basicAttackerProjectileFireRate = BASIC_ATTACKER_PROJECTILE_FIRE_RATE_BASE + basicAttackerProjectileFireRateLevel;
 
 // Blocker
 const BASIC_BLOCKER_NAME = ""; // replace with real tower name

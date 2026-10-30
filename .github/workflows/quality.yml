@@ -13,6 +13,8 @@ concurrency:
 
 jobs:
   quality:
+    # Keep the existing status name so current required-check rules still match.
+    # Type checking is no longer run; this job checks lint, format, and tests.
     name: Lint, types, and browser tests
     runs-on: ubuntu-24.04
     timeout-minutes: 10

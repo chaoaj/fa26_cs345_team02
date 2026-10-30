@@ -5,27 +5,25 @@ are development tools; the deployed game does not need a Node server or build.
 
 ## Commands
 
-| Command                  | Purpose                                                 |
-| ------------------------ | ------------------------------------------------------- |
-| `npm start`              | Serve the game locally on port 8080                     |
-| `npm run check`          | Check formatting, lint, and types without editing files |
-| `npm run verify`         | Run all checks and browser tests                        |
-| `npm run format`         | Apply consistent formatting                             |
-| `npm run lint:fix`       | Apply available lint fixes                              |
-| `npm run typecheck`      | Strictly type-check both game folders                   |
-| `npm test`               | Run Chromium smoke tests                                |
-| `npm run setup:browsers` | Install the browser used by the tests                   |
-| `npm run test:ui`        | Open the interactive browser test runner                |
+| Command                  | Purpose                                         |
+| ------------------------ | ----------------------------------------------- |
+| `npm start`              | Serve the game locally on port 8080             |
+| `npm run check`          | Check formatting and lint without editing files |
+| `npm run verify`         | Run all checks and browser tests                |
+| `npm run format`         | Apply consistent formatting                     |
+| `npm run lint:fix`       | Apply available lint fixes                      |
+| `npm test`               | Run Chromium smoke tests                        |
+| `npm run setup:browsers` | Install the browser used by the tests           |
+| `npm run test:ui`        | Open the interactive browser test runner        |
 
 ## What runs automatically
 
 Husky connects Git events to our npm commands. It does not inspect the game
-itself; ESLint, Prettier, TypeScript, and Playwright do that work. A command that
+itself; ESLint, Prettier, and Playwright do that work. A command that
 fails stops the commit or push, leaving your changes available to fix and retry.
 
-- **Commit:** Husky runs lint-staged (ESLint/Prettier on staged files), then checks
-  types across both sketches. Partially staged files are supported. Type checks
-  include unstaged working-tree code, so fix those errors too.
+- **Commit:** Husky runs lint-staged (ESLint/Prettier on staged files).
+  Partially staged files are supported.
 - **Push:** the full `npm run verify` gate runs. Chromium must be installed.
   Tests use their own server on port 8081, so your game can keep running on 8080.
 - **GitHub:** the Quality workflow runs on pushes and pull requests using `npm ci`.
@@ -47,28 +45,19 @@ local runs use the pinned Chromium download by default.
 On Windows, both hooks use `npm.cmd` so GitHub Desktop does not accidentally
 launch WSL through npm's Bash wrapper. macOS and Linux use `npm` as usual.
 
-## Writing checked JavaScript
+## Writing JavaScript
 
-TypeScript's `checkJs` checks JavaScript without generating files. The installed
-p5 1.x type declarations provide portable editor autocomplete. Both entry files
-and their shared imports are checked. Browser scripts use ES modules and p5
-instance mode; see [the import guide](game-code.md).
-
-Use JSDoc when a parameter's type cannot be inferred:
-
-```js
-/** @param {number} column */
-function columnToX(column) {
-  return column * 40;
-}
-```
+Use ordinary JavaScript. Type checking is disabled, so teammates do not need
+type annotations or fixes for implicit `any`. The p5 declarations are retained
+for editor hints only. Browser scripts use ES modules and p5 instance mode;
+see [the import guide](game-code.md).
 
 Define callbacks on the p5 instance (`p.setup`, `p.draw`, `p.mousePressed`). Use
 `p.createCanvas`, `p.background`, etc. inside them. `types/p5-browser.d.ts`
 describes the p5 constructor loaded by HTML; it contains no runtime code.
 
-ESLint catches unused variables, unknown names, and loose equality. TypeScript
-checks invalid p5 calls and imports. Put Node tooling and browser tests in `.mjs` files.
+ESLint catches unused variables, unknown names, and loose equality. Browser tests
+check startup and gameplay scenarios. Put Node tooling and browser tests in `.mjs` files.
 
 Vendored `libraries/` files and generated reports are excluded from the source
 checks. The team's `project/` planning documents are excluded from formatting.
@@ -90,8 +79,9 @@ After the workflow runs on GitHub once, add a ruleset for the default branch:
 
 Local hooks can be bypassed. A required GitHub check enforces the shared gate.
 These repository settings must be enabled separately by an admin.
+The existing status name is retained for compatibility with branch rules; the
+job now runs formatting, lint, and browser tests without type checking.
 
 Tool references: [Husky](https://typicode.github.io/husky/),
 [Prettier commit hooks](https://prettier.io/docs/precommit),
-[TypeScript checkJs](https://www.typescriptlang.org/tsconfig/checkJs.html), and
 [Playwright test servers](https://playwright.dev/docs/test-webserver).

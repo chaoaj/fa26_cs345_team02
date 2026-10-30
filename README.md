@@ -58,14 +58,15 @@ Open **[the development game](http://127.0.0.1:8080/index-dev.html)** in your br
 Keep the terminal open while playing. Press **Ctrl+C** in it to stop the server
 (on Mac too).
 
-| Want to…                     | Use this                                               |
-| ---------------------------- | ------------------------------------------------------ |
-| Work on the game             | Edit files in `src/`, save, then refresh the browser   |
-| See the production sketch    | Open <http://127.0.0.1:8080/>; its code is `sketch.js` |
-| Open the standalone dev page | Open <http://127.0.0.1:8080/dev/>                      |
+| Want to…                     | Use this                                                 |
+| ---------------------------- | -------------------------------------------------------- |
+| Work on the game             | Edit files in `dev/src/`, save, then refresh the browser |
+| See the production sketch    | Open <http://127.0.0.1:8080/>; its code is `sketch.js`   |
+| Open the standalone dev page | Open <http://127.0.0.1:8080/dev/>                        |
 
-Both entry files import the same game in `src/game.js`. Settings live in
-`src/config.js`. The starter shows a gray canvas — that's expected!
+Development uses `dev/src/game.js`; production keeps `src/game.js` separately.
+Try the [Energy prototype](docs/energy-prototype.md) on either development page.
+Production still shows the starter gray canvas until finished work is promoted.
 
 Want to split your code into more files? See [the tiny import guide](docs/game-code.md).
 
@@ -86,7 +87,7 @@ Want to split your code into more files? See [the tiny import guide](docs/game-c
    A pull request asks the team to review your changes before merging them.
 
 **Your little safety net 🛟:** committing automatically formats your staged files
-and checks code/types. Pushing also runs browser tests. GitHub repeats the checks
+and checks JavaScript with ESLint. Pushing also runs browser tests. GitHub repeats the checks
 on your pull request. If something fails, fix it and try again.
 
 ## 🧰 Quick fixes
@@ -97,7 +98,7 @@ on your pull request. If something fails, fix it and try again.
 | PowerShell says `npm.ps1` cannot run | In the terminal dropdown, choose **Command Prompt** and open a new terminal.            |
 | npm can't find `package.json`        | Open the cloned project folder in VS Code, then create a new terminal.                  |
 | Formatting check failed              | Run `npm run format`, review the changes, and retry.                                    |
-| Lint or type check failed            | Read the filename and line number in the error. Fix that line; ask a teammate if stuck. |
+| Lint check failed                    | Read the filename and line number in the error. Fix that line; ask a teammate if stuck. |
 | Browser executable is missing        | Run `npm run setup:browsers` again.                                                     |
 | Port 8080 is already in use          | Stop the other `npm start` terminal with Ctrl+C, then retry.                            |
 | Tools changed after pulling          | Run `npm ci` and `npm run setup:browsers` again.                                        |

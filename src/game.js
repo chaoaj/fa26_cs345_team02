@@ -1,23 +1,24 @@
-import { GAME_CONFIG } from "./config.js";
+import { createEnergyView } from "./energy-view.js";
 
-export function createGame() {
-  return new window.p5((p) => {
-    /**
-     * @type {any}
-     */
-    let bgImage;
+export function createGame(energy) {
+  const view = createEnergyView(energy);
 
-    p.preload = () => {
-      bgImage = p.loadImage(GAME_CONFIG.backgroundImage);
-    };
-
+  const game = new window.p5((p) => {
     p.setup = () => {
-      p.createCanvas(GAME_CONFIG.width, GAME_CONFIG.height);
+      p.createCanvas(400, 160);
+      p.describe(
+        "Energy collection prototype. Use the buttons above the canvas.",
+      );
     };
-
     p.draw = () => {
-      p.background(GAME_CONFIG.backgroundColor); // fallback / clears the frame
-      p.image(bgImage, 0, 0, p.width, p.height);
+      p.background(220);
+      view.update();
     };
   });
+  const remove = game.remove.bind(game);
+  game.remove = () => {
+    view.destroy();
+    remove();
+  };
+  return game;
 }

@@ -1,7 +1,10 @@
-// Export values here so other files can import them.
-export const GAME_CONFIG = {
-  width: 1280,
-  height: 720,
-  backgroundColor: 220,
-  backgroundImage: "../board.webp",
+// Prototype defaults only. PBI-02 can supply the agreed starting balance later.
+export const ENERGY_CONFIG = {
+  initialEnergy: 10,
+  economyTower: {
+    name: "Economy tower",
+    cost: 5,
+    production: { intervalMs: 5000, amount: 10 },
+  },
+  demoTower: { name: "Demo tower", cost: 15 },
 };

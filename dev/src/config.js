@@ -20,7 +20,7 @@ export const GAME_CONFIG = {
   cellHeight: 125,
 
   gridStartX: 330,
-  gridStartY: 320
+  gridStartY: 320,
 };
 
 export const SHOP_CONFIG = {
@@ -29,4 +29,4 @@ export const SHOP_CONFIG = {
   cocoonCost: 100,
   width: 256,
   height: 64,
-}
+};

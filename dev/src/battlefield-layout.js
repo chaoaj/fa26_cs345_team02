@@ -1,7 +1,5 @@
-
-
 export function createBattlefieldLayout() {
-    return {
+  return {
     // currently selected unit
     curUnit: null,
 
@@ -16,6 +14,6 @@ export function createBattlefieldLayout() {
     // unit images
     butterfly: null,
     worm: null,
-    cocoon: null
+    cocoon: null,
   };
 }

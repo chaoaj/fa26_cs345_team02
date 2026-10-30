@@ -3,7 +3,6 @@ body {
   margin: 0;
   padding: 0;
   background: black;
-  background-image: url("images/background/Amazigod_BugVsAliens_BackgroundV2.jpg");
   background-repeat: no-repeat;
   background-position: 0px 300px;
   background-size: 75%;
@@ -13,9 +12,6 @@ canvas {
   display: block;
   position: absolute;
   background: transparent;
-  
-  
-  
 }
 
 body {

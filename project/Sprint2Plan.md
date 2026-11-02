@@ -6,7 +6,7 @@
 
 | Sprint items | Proposed story points | Proposed task hours |
 | :----------: | :-------------------: | :-----------------: |
-|    **4**     |        **13**         |       ****        |
+|    **5**     |        **15**         |       **20**        |
 
 ---
 
@@ -39,8 +39,8 @@ Players can try the game's basic building interaction and understand the tradeof
 | Five lanes × ten columns              | Enemies, combat, and waves           |
 | Three recognizable tower types        | Win/lose conditions                  |
 | Tower selection and placement         | Gold, selling, and upgrades          |
-| Placement costs and cooldowns         | Gems, rewards, and merchants         |
-| Energy collection and balance display | Attacker and blocker combat behavior |
+| Tower selling                         | Gems, rewards, and merchants         |
+|                                       | Attacker and blocker combat behavior |
 
 > [!IMPORTANT]
 > **Prototype collection assumption:** Use a simple timed, click-to-collect interaction on economy towers. This keeps resource collection demonstrable without adding a wave system. This is a proposed prototype interaction, not a change to the final game's requirement that passive production occurs only during active, unpaused combat. Integrate that phase restriction when implementing the full economy.
@@ -50,10 +50,10 @@ Players can try the game's basic building interaction and understand the tradeof
 ## 2. GitHub Projects Checklist
 
 - [x] Created a Sprint iteration named "Sprint 2" in GitHub Projects.
-- [ ] Moved all four selected issues into Sprint 2.
+- [x] Moved all five selected issues into Sprint 2.
 - [x] Every selected issue has a team-agreed story-point estimate.
 - [x] Every selected issue has acceptance criteria.
-- [ ] Every selected issue has tasks with hour estimates and named assignees in its comments.
+- [x] Every selected issue has tasks with hour estimates and named assignees in its comments.
 - [x] Started the sprint by setting every selected issue to In Progress, following the professor's template.
 
 ---
@@ -69,8 +69,9 @@ PBI-30 provides the three tower definitions; PBI-02 makes them available at star
 | 1   | As a player, I want a clearly displayed five-lane battlefield so that I can plan where to place defenders.                     |                      3 | To be linked — PBI-01 |
 | 2   | As a player, I want to begin with basic tower choices and starting Energy so that I can set up my defense.                     |                      2 | To be linked — PBI-02 |
 | 3   | As a player, I want to place available towers on empty tiles so that I can build my defense.                                   |                      5 | To be linked — PBI-03 |
-| 4   | As a player, I want distinct attacker, blocker, and economy towers so that I can recognize their intended roles when building. |                      3 | To be linked — PBI-30 |
-|     | **Total story points**                                                                                                         |                 **13** |                       |
+| 4   | As a player, I want distinct attacker, blocker, and economy towers so that I can recognize their intended roles when building. |                      3 | To be linked — PBI-32 |
+| 4   | As a player, I want to sell towers I no longer need mid-round to get a portion of my energy back.     |                      2 | To be linked — PBI-12 |
+|     | **Total story points**                                                                                                         |                 **15** |                       |
 
 The new items deliver only the initial tower and resource foundation. The full tower-role PBI-12 and two-currency economy PBI-07 remain open for their broader scope.
 
@@ -82,12 +83,12 @@ Assign the tasks in Section 5 to actual team members, then replace the unassigne
 
 | Team member       | Tasks assigned (count) | Total hours |
 | ----------------- | ---------------------: | ----------: |
-| Madison Jones     |                        |           4 |
-| Kevin Bermingham  |                        |           4 |
-| Daniel Colman     |                        |           4 |
-| Sean Nguyen       |                        |           4 |
-| Nathaniel Amazigo |                        |           4 |
-| **Team total**    |                        |      **** |
+| Madison Jones     |                      1 |           4 |
+| Kevin Bermingham  |                      1 |           4 |
+| Daniel Colman     |                      1 |           4 |
+| Sean Nguyen       |                      1 |           4 |
+| Nathaniel Amazigo |                      1 |           4 |
+| **Team total**    |                        |      **20** |
 
 **Is the work split fairly?** Yes
 

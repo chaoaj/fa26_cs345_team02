@@ -4,13 +4,13 @@
 
 ## Team and Sprint Information
 
-| Field | Your answer |
-| --- | --- |
-| Team name | 2 |
-| Team members | Madison Jones, Kevin Bermingham, Daniel Colman, Sean Nguyen, Nathaniel Amazigo |
-| Sprint | Sprint 1 |
-| Sprint dates | 2026-10-23 to 2026-10-30 |
-| Scrum Master for this sprint | Sean Nguyen |
+| Field                                              | Your answer                                                                                                                                                       |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Team name                                          | 2                                                                                                                                                                 |
+| Team members                                       | Madison Jones, Kevin Bermingham, Daniel Colman, Sean Nguyen, Nathaniel Amazigo                                                                                    |
+| Sprint                                             | Sprint 1                                                                                                                                                          |
+| Sprint dates                                       | 2026-10-23 to 2026-10-30                                                                                                                                          |
+| Scrum Master for this sprint                       | Sean Nguyen                                                                                                                                                       |
 | Sprint Goal (copied exactly from your Sprint Plan) | Build a **5×10 defense-building prototype** where players can place **attackers, blockers, and economy towers**, collect **Energy**, and spend it on more towers. |
 
 ## Part 1: Sprint Review
@@ -27,12 +27,12 @@ At the Sprint Review you demonstrate your product to the stakeholder (your instr
 - _On GitHub.com, go to your repository, select **Commits**, and use the copy button next to the commit._
 - _From a terminal in your repository, run `git rev-parse HEAD`._
 
-| Field | Your answer |
-| --- | --- |
-| Commit ID of the demonstrated product | daf76fa3fe0f8ffed5eb305e64cdcf558b21c6ae |
-| Link to the commit on GitHub | https://github.com/chaoaj/fa26_cs345_team02/commit/daf76fa3fe0f8ffed5eb305e64cdcf558b21c6ae |
-| Production URL | https://chaoaj.github.io/fa26_cs345_team02/ |
-| Team member giving the demo | Sean Nguyen |
+| Field                                 | Your answer                                                                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Commit ID of the demonstrated product | daf76fa3fe0f8ffed5eb305e64cdcf558b21c6ae                                                    |
+| Link to the commit on GitHub          | https://github.com/chaoaj/fa26_cs345_team02/commit/daf76fa3fe0f8ffed5eb305e64cdcf558b21c6ae |
+| Production URL                        | https://chaoaj.github.io/fa26_cs345_team02/                                                 |
+| Team member giving the demo           | Sean Nguyen                                                                                 |
 
 ### 1.2 "Ready for Review" Checklist
 
@@ -45,15 +45,15 @@ At the Sprint Review you demonstrate your product to the stakeholder (your instr
 
 ### 1.3 Sprint Backlog Results
 
-| # | Sprint Backlog Item | GitHub issue | Story points | All acceptance criteria met? | Final status |
-| --- | --- | --- | ---: | --- | --- |
-| 1 | Implement basic Energy collection and tower spending | #33 | 3 | Yes | Done |
-| 2 | Set up code quality checks and a beginner-friendly workflow | #34 | 3 | Yes | Done |
-| 3 | Initialize each run with a consistent starting loadout | #3 | 2 | Yes | Done |
-| 4 | Create the 5×10 battlefield and lane layout | #2 | 3 | No | Not completed |
-| 5 | Implement tower placement, costs, and cooldowns | #4 | 5 | No | Not completed |
-| 6 | Add basic attacker, blocker, and economy tower types | #32 | 3 | No | Not completed |
-|  | **Totals** |  | **19** |  | **8 story points completed** |
+| #   | Sprint Backlog Item                                         | GitHub issue | Story points | All acceptance criteria met? | Final status                 |
+| --- | ----------------------------------------------------------- | ------------ | -----------: | ---------------------------- | ---------------------------- |
+| 1   | Implement basic Energy collection and tower spending        | #33          |            3 | Yes                          | Done                         |
+| 2   | Set up code quality checks and a beginner-friendly workflow | #34          |            3 | Yes                          | Done                         |
+| 3   | Initialize each run with a consistent starting loadout      | #3           |            2 | Yes                          | Done                         |
+| 4   | Create the 5×10 battlefield and lane layout                 | #2           |            3 | No                           | Not completed                |
+| 5   | Implement tower placement, costs, and cooldowns             | #4           |            5 | No                           | Not completed                |
+| 6   | Add basic attacker, blocker, and economy tower types        | #32          |            3 | No                           | Not completed                |
+|     | **Totals**                                                  |              |       **19** |                              | **8 story points completed** |
 
 #### Items Not Completed
 
@@ -111,20 +111,20 @@ The sprint did not achieve its goal, with more than 50% of the planned story poi
 
 ### 2.4 Retrospective Meeting Record
 
-| Field | Your answer |
-| --- | --- |
-| Date of retrospective meeting | 2026-10-30 |
-| Team members present | Sean Nguyen, Daniel Colman |
+| Field                         | Your answer                |
+| ----------------------------- | -------------------------- |
+| Date of retrospective meeting | 2026-10-30                 |
+| Team members present          | Sean Nguyen, Daniel Colman |
 
 ## Part 3: Self-Check Before Submitting
 
-| Grading question | Our answer |
-| --- | --- |
-| Is our sprint identical to what we started with? | Yes |
-| Did we complete our tasks? | Partly |
-| Did we complete our backlog items, as shown by their acceptance criteria? | Yes |
-| Did we meet our Sprint Goal? | No |
-| Is our code committed and pushed? | Yes |
-| Is our code free of large show-stopper bugs? | Yes |
-| Did we write a reasonable retrospective (2–3 items in each category)? | Yes |
-| Did we write a thoughtful summary of our sprint? | Yes |
+| Grading question                                                          | Our answer |
+| ------------------------------------------------------------------------- | ---------- |
+| Is our sprint identical to what we started with?                          | Yes        |
+| Did we complete our tasks?                                                | Partly     |
+| Did we complete our backlog items, as shown by their acceptance criteria? | Yes        |
+| Did we meet our Sprint Goal?                                              | No         |
+| Is our code committed and pushed?                                         | Yes        |
+| Is our code free of large show-stopper bugs?                              | Yes        |
+| Did we write a reasonable retrospective (2–3 items in each category)?     | Yes        |
+| Did we write a thoughtful summary of our sprint?                          | Yes        |

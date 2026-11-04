@@ -10,6 +10,18 @@ for (const path of ["/", "/index-dev.html", "/dev/"]) {
     const balance = page.getByLabel("Energy balance");
     await expect(canvas).toBeVisible();
     await expect(balance).toHaveText("300");
+    // Wait for the actual sidebar artwork before interacting with the canvas.
+    await expect
+      .poll(() =>
+        canvas.evaluate((element) => {
+          const scale = element.width / 1376;
+          return Array.from(
+            element.getContext("2d").getImageData(40 * scale, 160 * scale, 1, 1)
+              .data,
+          );
+        }),
+      )
+      .toEqual([215, 215, 165, 255]);
 
     // Starting-loadout's board geometry is retained, with all three roles.
     const boardX = 180 + 325 * (1196 / 1376);

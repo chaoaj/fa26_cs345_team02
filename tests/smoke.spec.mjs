@@ -24,6 +24,28 @@ for (const path of ["/", "/index-dev.html", "/dev/"]) {
       const { game } = await import(entry.src);
       return game.frameCount >= 3;
     });
+    // Running frames alone cannot detect a blank green battlefield.
+    await expect
+      .poll(() =>
+        page.locator("canvas").evaluate((canvas) => {
+          const context = canvas.getContext("2d");
+          const scale = canvas.width / 1376;
+          const colors = new Set();
+          for (let y = 100; y < 700; y += 60) {
+            for (let x = 300; x < 1200; x += 60) {
+              const pixel = context.getImageData(
+                Math.floor(x * scale),
+                Math.floor(y * scale),
+                1,
+                1,
+              ).data;
+              colors.add(`${pixel[0]},${pixel[1]},${pixel[2]}`);
+            }
+          }
+          return colors.size;
+        }),
+      )
+      .toBeGreaterThan(20);
     expect(errors).toEqual([]);
   });
 }

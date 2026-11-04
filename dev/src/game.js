@@ -13,6 +13,7 @@ export function createGame(
   const battlefield = createBattlefieldLayout();
   const sprites = {};
   let backgroundImg;
+  let imageError = "";
   const sidebarWidth = 180;
   const boardX = sidebarWidth + 325 * (1196 / 1376);
   const boardY = 250;
@@ -23,21 +24,38 @@ export function createGame(
   const choices = Object.entries(TOWER_TYPES);
 
   const game = new window.p5((p) => {
-    p.preload = () => {
-      backgroundImg = p.loadImage(
+    function loadImages() {
+      p.loadImage(
         new URL("../images/background/bugalienbackdrop.png", import.meta.url)
           .href,
+        (image) => {
+          backgroundImg = image;
+        },
+        imageLoadFailed,
       );
       for (const [type, definition] of choices) {
-        sprites[type] = p.loadImage(
+        p.loadImage(
           new URL("../images/bugs/" + definition.sprite, import.meta.url).href,
+          (image) => {
+            sprites[type] = image;
+          },
+          imageLoadFailed,
         );
       }
-    };
+    }
+
+    function imageLoadFailed() {
+      imageError = "Could not load battlefield artwork. Refresh to try again.";
+    }
+
+    function imagesReady() {
+      return Boolean(backgroundImg) && choices.every(([type]) => sprites[type]);
+    }
 
     p.setup = () => {
       p.createCanvas(GAME_CONFIG.width, GAME_CONFIG.height);
       p.imageMode(p.CENTER);
+      loadImages();
       p.describe(
         "Five lanes and ten columns. Select a tower in the sidebar, then click an empty tile. Click a ready economy tower to collect Energy.",
       );
@@ -45,6 +63,17 @@ export function createGame(
 
     p.draw = () => {
       p.background(25, 65, 40);
+      view.update();
+      if (!imagesReady()) {
+        p.push();
+        p.fill(255);
+        p.noStroke();
+        p.textSize(20);
+        p.textAlign(p.LEFT, p.TOP);
+        p.text(imageError || "Loading battlefield…", 24, 24);
+        p.pop();
+        return;
+      }
       p.image(
         backgroundImg,
         sidebarWidth + (p.width - sidebarWidth) / 2,
@@ -55,7 +84,6 @@ export function createGame(
       drawSidebar();
       drawPlacedTowers();
       drawPreview();
-      view.update();
     };
 
     function drawSidebar() {
@@ -132,6 +160,7 @@ export function createGame(
     }
 
     p.mousePressed = () => {
+      if (!imagesReady()) return;
       // DOM controls are handled by their own click listeners.
       if (
         p.mouseX < 0 ||

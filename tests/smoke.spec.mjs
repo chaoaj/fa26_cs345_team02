@@ -6,6 +6,9 @@ for (const path of ["/", "/index-dev.html", "/dev/"]) {
     page.on("pageerror", (error) => errors.push(error.message));
     page.on("console", (message) => {
       if (message.type() === "error") errors.push(message.text());
+      if (message.text().includes("Multiple readback operations")) {
+        errors.push(message.text());
+      }
     });
     page.on("requestfailed", (request) => {
       errors.push(`${request.url()}: ${request.failure()?.errorText}`);

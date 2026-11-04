@@ -13,13 +13,12 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --project jsconfig.json && tsc --project dev/jsconfig.json",
-    "check": "npm run format:check && npm run lint && npm run typecheck",
+    "check": "npm run format:check && npm run lint",
     "setup:browsers": "node scripts/playwright.mjs install chromium",
     "test": "node scripts/playwright.mjs test",
     "test:ui": "node scripts/playwright.mjs test --ui",
     "verify": "npm run check && npm test",
-    "precommit": "lint-staged && npm run typecheck"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,mjs,cjs}": [
@@ -38,7 +37,6 @@
     "http-server": "14.1.1",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
-    "prettier": "3.9.10",
-    "typescript": "7.0.2"
+    "prettier": "3.9.10"
   }
 }

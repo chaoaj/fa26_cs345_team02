@@ -1,13 +1,20 @@
 # 🧩 One game, many files
 
 `sketch.js` starts the production game. `dev/sketch.js` starts the development
-pages. Both import the same game, so you don't have to copy changes between them.
+pages. Their game modules are separate to follow the class's development and
+production workflow. Work in `dev/` first, then promote finished work separately.
 
 ```text
-sketch.js / dev/sketch.js   ← start the game
-  └─ src/game.js           ← setup and draw loop
-       └─ src/config.js    ← canvas size and background color
+sketch.js                  ← production entry
+  └─ src/game.js           ← production game
+dev/sketch.js              ← development entry
+  └─ dev/src/game.js       ← development game and Energy UI
+  └─ dev/src/energy.js     ← Energy operations
+  └─ dev/src/config.js     ← prototype settings
 ```
+
+The examples below explain the production starter's imports. Use the same
+pattern inside `dev/src/`; see [the Energy guide](energy-prototype.md) for its API.
 
 ## Export it, then import it
 
@@ -45,7 +52,6 @@ Launch with `npm start` so the browser can load the modules through the server.
 For example, create `src/enemy.js`:
 
 ```js
-/** @param {import("p5")} p */
 export function drawEnemy(p) {
   p.circle(100, 100, 30);
 }
@@ -68,8 +74,7 @@ p.draw = () => {
 
 We use p5's **instance mode**: `p` is your drawing toolkit, so write
 `p.circle(...)`, `p.createCanvas(...)`, and `p.mouseX`. Pass `p` to another file
-when it needs to draw. The JSDoc comment supplies autocomplete and type checks;
-the game code stays JavaScript.
+when it needs to draw. No type annotations are required; use ordinary JavaScript.
 
 As features grow, add files such as `board.js`, `tower.js`, and `enemy.js` under
 `src/`. Imports work like ordinary JavaScript imports in React; this setup runs

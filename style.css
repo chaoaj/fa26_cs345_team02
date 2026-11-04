@@ -7,3 +7,41 @@ body {
 canvas {
   display: block;
 }
+
+body {
+  background: #f1f6ef;
+  color: #153d2b;
+  font-family: system-ui, sans-serif;
+}
+
+.energy-demo {
+  max-width: 640px;
+  padding: 24px;
+}
+
+.energy-balance {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.energy-actions,
+.energy-towers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.energy-demo button {
+  padding: 12px 16px;
+  border: 2px solid #276343;
+  border-radius: 10px;
+  background: #d5efc4;
+  color: #153d2b;
+  font: inherit;
+  cursor: pointer;
+}
+
+.energy-demo button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}

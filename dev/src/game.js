@@ -1,197 +1,187 @@
+import { ENERGY_CONFIG, GAME_CONFIG } from "./config.js";
+import { createEnergySystem } from "./energy.js";
 import { createEnergyView } from "./energy-view.js";
 import { createBattlefieldLayout } from "./battlefield-layout.js";
-import { GAME_CONFIG } from "./config.js";
+import { TOWER_TYPES } from "./towers.js";
 
-/* 
-    let board = [
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-    ];
-*/
-
-let backdrop;
-
-export function createGame(energy) {
+export function createGame(
+  energy = createEnergySystem({
+    initialEnergy: ENERGY_CONFIG.initialEnergy,
+  }),
+) {
   const view = createEnergyView(energy);
   const battlefield = createBattlefieldLayout();
+  const sprites = {};
+  let backgroundImg;
+  const sidebarWidth = 180;
+  const boardX = sidebarWidth + 325 * (1196 / 1376);
+  const boardY = 250;
+  const boardWidth = 715 * (1196 / 1376);
+  const boardHeight = 365;
+  const tileWidth = boardWidth / GAME_CONFIG.cols;
+  const tileHeight = boardHeight / GAME_CONFIG.rows;
+  const choices = Object.entries(TOWER_TYPES);
 
   const game = new window.p5((p) => {
     p.preload = () => {
-      battlefield.butterflyShop = p.loadImage(
-        "images/bugs/butterfly_buying.png",
+      backgroundImg = p.loadImage(
+        new URL("../images/background/bugalienbackdrop.png", import.meta.url)
+          .href,
       );
-      battlefield.wormShop = p.loadImage("images/bugs/worm_buying.png");
-      battlefield.cocoonShop = p.loadImage("images/bugs/cacoon_buying.png");
-      battlefield.butterfly = p.loadImage("images/bugs/butterfly.png");
-      battlefield.worm = p.loadImage("images/bugs/worm.png");
-      battlefield.cocoon = p.loadImage("images/bugs/cacoon.png");
-
-      backdrop = p.loadImage("images/background/bugalienbackdrop.png");
+      for (const [type, definition] of choices) {
+        sprites[type] = p.loadImage(
+          new URL("../images/bugs/" + definition.sprite, import.meta.url).href,
+        );
+      }
     };
 
-    p.mousePressed = () => {
-      if (p.mouseButton === p.LEFT) {
-        if (p.mouseX >= 0 && p.mouseX < 64 && p.mouseY >= 0 && p.mouseY < 64) {
-          battlefield.curUnit = "butterfly";
-        } else if (
-          p.mouseX >= 64 &&
-          p.mouseX < 128 &&
-          p.mouseY >= 0 &&
-          p.mouseY < 64
-        ) {
-          battlefield.curUnit = "worm";
-        } else if (
-          p.mouseX >= 128 &&
-          p.mouseX < 192 &&
-          p.mouseY >= 0 &&
-          p.mouseY < 64
-        ) {
-          battlefield.curUnit = "cocoon";
-        }
+    p.setup = () => {
+      p.createCanvas(GAME_CONFIG.width, GAME_CONFIG.height);
+      p.imageMode(p.CENTER);
+      p.describe(
+        "Five lanes and ten columns. Select a tower in the sidebar, then click an empty tile. Click a ready economy tower to collect Energy.",
+      );
+    };
 
-        // Place unit on grid
-        const col = Math.floor(
-          (p.mouseX - GAME_CONFIG.gridStartX) / GAME_CONFIG.cellWidth,
-        );
-        const row = Math.floor(
-          (p.mouseY - GAME_CONFIG.gridStartY) / GAME_CONFIG.cellHeight,
-        );
+    p.draw = () => {
+      p.background(25, 65, 40);
+      p.image(
+        backgroundImg,
+        sidebarWidth + (p.width - sidebarWidth) / 2,
+        p.height / 2,
+        p.width - sidebarWidth,
+        p.height,
+      );
+      drawSidebar();
+      drawPlacedTowers();
+      drawPreview();
+      view.update();
+    };
 
-        if (
-          battlefield.curUnit !== null &&
-          row >= 0 &&
-          row < GAME_CONFIG.rows &&
-          col >= 0 &&
-          col < GAME_CONFIG.cols
-        ) {
-          const cellTaken = battlefield.placedUnits.some(
-            (placed) => placed.row === row && placed.col === col,
-          );
-          if (
-            !cellTaken &&
-            battlefield.curUnit !== null &&
-            row >= 0 &&
-            row < GAME_CONFIG.rows &&
-            col >= 0 &&
-            col < GAME_CONFIG.cols
-          ) {
-            battlefield.placedUnits.push({
-              row: row,
-              col: col,
-              unit: battlefield.curUnit,
-            });
-          }
+    function drawSidebar() {
+      p.noStroke();
+      p.fill(25, 65, 40);
+      p.rect(0, 0, sidebarWidth, p.height);
+      p.stroke(100, 150, 90);
+      p.strokeWeight(3);
+      p.line(sidebarWidth, 0, sidebarWidth, p.height);
+      p.noStroke();
+      p.fill(255, 220, 60);
+      p.circle(35, 40, 30);
+      p.fill(255);
+      p.textSize(19);
+      p.textAlign(p.LEFT, p.CENTER);
+      p.text(energy.getBalance(), 60, 40);
+      choices.forEach(([type, definition], index) => {
+        const y = 160 + index * 115;
+        p.push();
+        p.rectMode(p.CENTER);
+        p.stroke(battlefield.curUnit === type ? "#ffdc32" : "#829664");
+        p.strokeWeight(battlefield.curUnit === type ? 4 : 2);
+        p.fill(energy.canAfford(definition.cost) ? "#d7d7a5" : "#8a9276");
+        p.rect(90, y, 110, 95, 10);
+        p.image(sprites[type], 90, y - 10, 55, 55);
+        p.noStroke();
+        p.fill(35);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(14);
+        p.text(definition.name, 90, y + 24);
+        p.text(definition.cost + " Energy", 90, y + 41);
+        p.pop();
+      });
+    }
+
+    function drawPlacedTowers() {
+      const readiness = new Map(
+        energy.getTowers().map((tower) => [tower.id, tower.ready]),
+      );
+      for (const tower of battlefield.placedUnits) {
+        const x = boardX + tower.col * tileWidth + tileWidth / 2;
+        const y = boardY + tower.row * tileHeight + tileHeight / 2;
+        p.image(sprites[tower.type], x, y, 60, 60);
+        if (readiness.get(tower.id)) {
+          p.noFill();
+          p.stroke(255, 220, 60);
+          p.strokeWeight(3);
+          p.circle(x, y, 64);
         }
       }
+    }
 
+    function drawPreview() {
+      const col = Math.floor((p.mouseX - boardX) / tileWidth);
+      const row = Math.floor((p.mouseY - boardY) / tileHeight);
+      if (
+        battlefield.curUnit === null ||
+        col < 0 ||
+        col >= GAME_CONFIG.cols ||
+        row < 0 ||
+        row >= GAME_CONFIG.rows
+      )
+        return;
+      p.push();
+      p.tint(255, 150);
+      p.image(
+        sprites[battlefield.curUnit],
+        boardX + col * tileWidth + tileWidth / 2,
+        boardY + row * tileHeight + tileHeight / 2,
+        60,
+        60,
+      );
+      p.pop();
+    }
+
+    p.mousePressed = () => {
+      // DOM controls are handled by their own click listeners.
+      if (
+        p.mouseX < 0 ||
+        p.mouseX >= p.width ||
+        p.mouseY < 0 ||
+        p.mouseY >= p.height
+      )
+        return;
       if (p.mouseButton === p.RIGHT) {
+        battlefield.curUnit = null;
+        return;
+      }
+      if (p.mouseButton !== p.LEFT) return;
+      for (let index = 0; index < choices.length; index++) {
+        const [type, definition] = choices[index];
+        const cardY = 160 + index * 115;
+        if (
+          p.mouseX >= 35 &&
+          p.mouseX <= 145 &&
+          p.mouseY >= cardY - 47.5 &&
+          p.mouseY <= cardY + 47.5
+        ) {
+          if (energy.canAfford(definition.cost)) battlefield.curUnit = type;
+          return;
+        }
+      }
+      const col = Math.floor((p.mouseX - boardX) / tileWidth);
+      const row = Math.floor((p.mouseY - boardY) / tileHeight);
+      if (
+        col < 0 ||
+        col >= GAME_CONFIG.cols ||
+        row < 0 ||
+        row >= GAME_CONFIG.rows
+      )
+        return;
+      const id = "tile-" + row + "-" + col;
+      const occupied = battlefield.placedUnits.some((tower) => tower.id === id);
+      if (occupied) {
+        energy.collect(id);
+        return;
+      }
+      if (battlefield.curUnit === null) return;
+      const type = battlefield.curUnit;
+      if (energy.placeTower(id, TOWER_TYPES[type])) {
+        battlefield.placedUnits.push({ id, row, col, type });
         battlefield.curUnit = null;
       }
     };
-    p.setup = () => {
-      p.createCanvas(GAME_CONFIG.width, GAME_CONFIG.height);
-      p.describe(
-        "Energy collection prototype. Use the buttons above the canvas.",
-      );
-    };
-    p.draw = () => {
-      //p.background(220);
-      view.update();
-
-      p.clear(); //to redraw background
-
-      p.image(backdrop, 0, 0, GAME_CONFIG.width, GAME_CONFIG.height);
-      p.image(battlefield.butterflyShop, 0, 0, 64, 64);
-      p.image(battlefield.wormShop, 64, 0, 64, 64);
-      p.image(battlefield.cocoonShop, 128, 0, 64, 64);
-
-      const currentCol = Math.floor(
-        (p.mouseX - GAME_CONFIG.gridStartX) / GAME_CONFIG.cellWidth,
-      );
-      const currentRow = Math.floor(
-        (p.mouseY - GAME_CONFIG.gridStartY) / GAME_CONFIG.cellHeight,
-      );
-
-      for (const placed of battlefield.placedUnits) {
-        const x = GAME_CONFIG.gridStartX + placed.col * GAME_CONFIG.cellWidth;
-
-        const y = GAME_CONFIG.gridStartY + placed.row * GAME_CONFIG.cellHeight;
-
-        if (placed.unit === "butterfly") {
-          p.image(
-            battlefield.butterfly,
-            x,
-            y,
-            GAME_CONFIG.cellWidth,
-            GAME_CONFIG.cellHeight,
-          );
-        } else if (placed.unit === "worm") {
-          p.image(
-            battlefield.worm,
-            x,
-            y,
-            GAME_CONFIG.cellWidth,
-            GAME_CONFIG.cellHeight,
-          );
-        } else if (placed.unit === "cocoon") {
-          p.image(
-            battlefield.cocoon,
-            x,
-            y,
-            GAME_CONFIG.cellWidth,
-            GAME_CONFIG.cellHeight,
-          );
-        }
-      }
-      for (let row = 0; row < GAME_CONFIG.rows; row++) {
-        for (let col = 0; col < GAME_CONFIG.cols; col++) {
-          const x = GAME_CONFIG.gridStartX + col * GAME_CONFIG.cellWidth;
-          const y = GAME_CONFIG.gridStartY + row * GAME_CONFIG.cellHeight;
-
-          if (
-            battlefield.curUnit !== null &&
-            row === currentRow &&
-            col === currentCol
-          ) {
-            p.tint(255, 150);
-
-            if (battlefield.curUnit === "butterfly") {
-              p.image(
-                battlefield.butterfly,
-                x,
-                y,
-                GAME_CONFIG.cellWidth,
-                GAME_CONFIG.cellHeight,
-              );
-            } else if (battlefield.curUnit === "worm") {
-              p.image(
-                battlefield.worm,
-                x,
-                y,
-                GAME_CONFIG.cellWidth,
-                GAME_CONFIG.cellHeight,
-              );
-            } else if (battlefield.curUnit === "cocoon") {
-              p.image(
-                battlefield.cocoon,
-                x,
-                y,
-                GAME_CONFIG.cellWidth,
-                GAME_CONFIG.cellHeight,
-              );
-            }
-
-            p.noTint();
-          }
-
-          p.noStroke();
-        }
-      }
-    };
   });
+
   const remove = game.remove.bind(game);
   game.remove = () => {
     view.destroy();

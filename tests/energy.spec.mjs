@@ -113,6 +113,12 @@ for (const path of ["/index-dev.html", "/dev/"]) {
   }) => {
     await page.clock.install();
     await page.goto(path);
+    // The integrated starting loadout supplies 300 Energy. Exercise low funds too.
+    await page.evaluate(async () => {
+      const entry = globalThis.document.querySelector('script[type="module"]');
+      const { energy } = await import(entry.src);
+      energy.trySpend(290);
+    });
     const balance = page.getByLabel("Energy balance");
     const economy = page.getByRole("button", {
       name: "Place economy tower (5 Energy)",

@@ -66,7 +66,9 @@ Keep the terminal open while playing. Press **Ctrl+C** in it to stop the server
 
 Development uses `dev/src/game.js`; production keeps `src/game.js` separately.
 Try the [Energy prototype](docs/energy-prototype.md) on either development page.
-Production still shows the starter gray canvas until finished work is promoted.
+The integrated build uses the starting-loadout sidebar and 5×10 board. Choose a
+tower in the sidebar, then click an empty tile. Click a ready economy tower to
+collect Energy. Production and development each have their own source and images.
 
 Want to split your code into more files? See [the tiny import guide](docs/game-code.md).
 

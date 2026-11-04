@@ -2,20 +2,22 @@
 
 Run `npm start`, then open `/index-dev.html` or `/dev/`.
 
-1. Start with 10 Energy and place an economy tower for 5.
+1. Start with 300 Energy and place an economy tower for 5.
 2. Wait 5 seconds, then click **Collect 10 Energy**.
-3. The balance becomes 15 and the demo tower becomes affordable.
-4. Place that tower; the balance becomes 0.
+3. The balance becomes 305. The sidebar and collection controls use this balance.
+4. Place the 15-Energy demo tower; the balance becomes 290.
 
-The buttons demonstrate the Energy integration before the real board exists.
-They are not the final tower selection or placement system. Production remains
-unchanged; all implementation files are under `dev/`.
+The canvas sidebar places attacker, blocker, and economy towers on the board.
+The Energy lab buttons remain available for prototype testing. Both paths use
+the shared spending and collection operations. The production build has its own
+copy under `src/`, with matching production images.
 
 ## Settings and integration
 
 `dev/src/config.js` contains temporary starting Energy, costs, production amount,
-and collection interval. PBI-02 should supply the agreed starting balance.
-`dev/towers.js` is a separate, unfinished tower-definition draft and is untouched.
+and collection interval. The starting balance comes from the starting-loadout
+branch. `dev/src/towers.js` supplies the three basic tower definitions and
+constructors. Their base costs and stats come from the basictowers work.
 
 `createEnergySystem({ initialEnergy, now? })` in `dev/src/energy.js` provides:
 

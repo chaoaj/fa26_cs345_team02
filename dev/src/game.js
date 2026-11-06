@@ -15,10 +15,10 @@ export function createGame(
   let backgroundImg;
   let imageError = "";
   const sidebarWidth = 180;
-  const boardX = sidebarWidth + 325 * (1196 / 1376);
-  const boardY = 250;
-  const boardWidth = 715 * (1196 / 1376);
-  const boardHeight = 365;
+  const boardX = sidebarWidth + 331 * (1372 / 1552);
+  const boardY = 201;
+  const boardWidth = 980;
+  const boardHeight = 490;
   const tileWidth = boardWidth / GAME_CONFIG.cols;
   const tileHeight = boardHeight / GAME_CONFIG.rows;
   const choices = Object.entries(TOWER_TYPES);
@@ -26,7 +26,7 @@ export function createGame(
   const game = new window.p5((p) => {
     function loadImages() {
       p.loadImage(
-        new URL("../images/background/bugalienbackdrop.png", import.meta.url)
+        new URL("../images/background/board.png", import.meta.url)
           .href,
         (image) => {
           backgroundImg = image;

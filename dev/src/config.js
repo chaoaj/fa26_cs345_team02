@@ -1,5 +1,5 @@
 export const ENERGY_CONFIG = {
-  initialEnergy: 300,
+  initialEnergy: 10,
   economyTower: {
     name: "Economy tower",
     cost: 5,

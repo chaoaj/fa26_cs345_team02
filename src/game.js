@@ -101,6 +101,7 @@ export function createGame(
       drawPlacedTowers();
       drawPreview();
       drawSellButton();
+      drawSellRefund();
     };
 
     function drawSidebar() {
@@ -194,6 +195,38 @@ export function createGame(
           25,
         );
       }
+    }
+
+    function drawSellRefund() {
+      if (!sellButton.isSellingMode()) return;
+
+      const col = Math.floor((p.mouseX - boardX) / tileWidth);
+      const row = Math.floor((p.mouseY - boardY) / tileHeight);
+
+      if (
+        col < 0 ||
+        col >= GAME_CONFIG.cols ||
+        row < 0 ||
+        row >= GAME_CONFIG.rows
+      )
+        return;
+
+      const tower = battlefield.placedUnits.find(
+        (tower) => tower.row === row && tower.col === col,
+      );
+
+      if (!tower) return;
+
+      const refund = Math.floor(TOWER_TYPES[tower.type].cost * 0.5);
+
+      p.push();
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(3);
+      p.textSize(16);
+      p.textAlign(p.LEFT, p.TOP);
+      p.text("Refund: " + refund + " Energy", p.mouseX + 20, p.mouseY + 40);
+      p.pop();
     }
 
     p.mousePressed = () => {

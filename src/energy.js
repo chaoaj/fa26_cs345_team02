@@ -102,6 +102,15 @@ export function createEnergySystem({
     };
   }
 
+  function removeTower(id) {
+    if (!towers.has(id)) return false;
+
+    towers.delete(id);
+    notify();
+
+    return true;
+  }
+
   return {
     getBalance: () => balance,
     canAfford,
@@ -111,5 +120,6 @@ export function createEnergySystem({
     collect,
     getTowers,
     subscribe,
+    removeTower,
   };
 }

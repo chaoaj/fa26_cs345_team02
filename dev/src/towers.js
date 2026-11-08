@@ -14,7 +14,7 @@ export const TOWER_TYPES = {
   cocoon: {
     name: "Blocker",
     cost: 5,
-    sprite: "cacoon.png",
+    sprite: "cocoon.png",
     durability: 10,
   },
   worm: {

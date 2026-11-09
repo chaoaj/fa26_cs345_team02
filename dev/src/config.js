@@ -1,5 +1,5 @@
 export const ENERGY_CONFIG = {
-  initialEnergy: 1000,
+  initialEnergy: 300,
   economyTower: {
     name: "Economy tower",
     cost: 5,
@@ -9,6 +9,11 @@ export const ENERGY_CONFIG = {
 };
 
 export const GAME_CONFIG = {
+  sidebarWidth: 180,
+  boardX: 180 + 331 * (1372 / 1552),
+  boardY: 201,
+  boardWidth: 980,
+  boardHeight: 490,
   width: 1552,
   height: 770,
   rows: 5,

@@ -14,11 +14,7 @@ export function createGame(
   const sprites = {};
   let backgroundImg;
   let imageError = "";
-  const sidebarWidth = 180;
-  const boardX = sidebarWidth + 331 * (1372 / 1552);
-  const boardY = 201;
-  const boardWidth = 980;
-  const boardHeight = 490;
+  const { sidebarWidth, boardX, boardY, boardWidth, boardHeight } = GAME_CONFIG;
   const tileWidth = boardWidth / GAME_CONFIG.cols;
   const tileHeight = boardHeight / GAME_CONFIG.rows;
   const choices = Object.entries(TOWER_TYPES);

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { createEnergySystem } from "../dev/src/energy.js";
+import { ENERGY_CONFIG } from "../dev/src/config.js";
 
 const economyTower = {
   name: "Economy tower",
@@ -113,39 +114,49 @@ for (const path of ["/index-dev.html", "/dev/"]) {
   }) => {
     await page.clock.install();
     await page.goto(path);
-    // The integrated starting loadout supplies 300 Energy. Exercise low funds too.
-    await page.evaluate(async () => {
+    const { economyTower, demoTower } = ENERGY_CONFIG;
+    const beforeCollection = Math.max(
+      0,
+      demoTower.cost - economyTower.production.amount,
+    );
+    const startingBalance = beforeCollection + economyTower.cost;
+    const afterCollection = beforeCollection + economyTower.production.amount;
+    const balance = page.getByLabel("Energy balance");
+    await expect(balance).toHaveText(String(ENERGY_CONFIG.initialEnergy));
+    // Exercise low funds independently of the configured starting loadout.
+    await page.evaluate(async (targetBalance) => {
       const entry = globalThis.document.querySelector('script[type="module"]');
       const { energy } = await import(entry.src);
-      energy.trySpend(290);
-    });
-    const balance = page.getByLabel("Energy balance");
+      const difference = energy.getBalance() - targetBalance;
+      if (difference >= 0) energy.trySpend(difference);
+      else energy.addEnergy(-difference);
+    }, startingBalance);
     const economy = page.getByRole("button", {
-      name: "Place economy tower (5 Energy)",
+      name: `Place ${economyTower.name.toLowerCase()} (${economyTower.cost} Energy)`,
       exact: true,
     });
     const demo = page.getByRole("button", {
-      name: "Place demo tower (15 Energy)",
+      name: `Place ${demoTower.name.toLowerCase()} (${demoTower.cost} Energy)`,
       exact: true,
     });
-    await expect(balance).toHaveText("10");
-    await expect(demo).toBeDisabled();
+    await expect(balance).toHaveText(String(startingBalance));
     await economy.click();
-    await expect(balance).toHaveText("5");
+    await expect(balance).toHaveText(String(beforeCollection));
+    await expect(demo).toBeDisabled();
     await expect(
       page.getByRole("button", { name: /Economy tower: ready in/ }),
     ).toBeDisabled();
-    await page.clock.runFor(5100);
+    await page.clock.runFor(economyTower.production.intervalMs + 100);
     const collect = page.getByRole("button", {
-      name: "Collect 10 Energy",
+      name: `Collect ${economyTower.production.amount} Energy`,
       exact: true,
     });
     await collect.click();
-    await expect(balance).toHaveText("15");
+    await expect(balance).toHaveText(String(afterCollection));
     await expect(collect).toHaveCount(0);
     await expect(demo).toBeEnabled();
     await demo.click();
-    await expect(balance).toHaveText("0");
+    await expect(balance).toHaveText(String(afterCollection - demoTower.cost));
     await expect(demo).toBeDisabled();
     await expect(economy).toBeDisabled();
   });

@@ -32,13 +32,12 @@ for (const path of ["/", "/index-dev.html", "/dev/"]) {
       .poll(() =>
         page.locator("canvas").evaluate((canvas) => {
           const context = canvas.getContext("2d");
-          const scale = canvas.width / 1376;
           const colors = new Set();
-          for (let y = 100; y < 700; y += 60) {
-            for (let x = 300; x < 1200; x += 60) {
+          for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 15; col++) {
               const pixel = context.getImageData(
-                Math.floor(x * scale),
-                Math.floor(y * scale),
+                Math.floor(canvas.width * (0.22 + col * 0.04)),
+                Math.floor(canvas.height * (0.14 + row * 0.07)),
                 1,
                 1,
               ).data;

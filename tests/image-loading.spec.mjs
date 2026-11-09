@@ -31,10 +31,14 @@ for (const path of ["/", "/index-dev.html", "/dev/"]) {
       await expect
         .poll(() =>
           page.locator("canvas").evaluate((canvas) => {
-            const scale = canvas.width / 1376;
             const pixel = canvas
               .getContext("2d")
-              .getImageData(600 * scale, 350 * scale, 1, 1).data;
+              .getImageData(
+                Math.floor(canvas.width * 0.45),
+                Math.floor(canvas.height * 0.45),
+                1,
+                1,
+              ).data;
             return Array.from(pixel);
           }),
         )

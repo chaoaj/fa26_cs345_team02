@@ -3,6 +3,7 @@ import { createEnergySystem } from "./energy.js";
 import { createEnergyView } from "./energy-view.js";
 import { createBattlefieldLayout } from "./battlefield-layout.js";
 import { TOWER_TYPES } from "./towers.js";
+import { createSellButton } from "./sellbutton.js";
 
 export function createGame(
   energy = createEnergySystem({
@@ -11,14 +12,11 @@ export function createGame(
 ) {
   const view = createEnergyView(energy);
   const battlefield = createBattlefieldLayout();
+  const sellButton = createSellButton();
   const sprites = {};
   let backgroundImg;
   let imageError = "";
-  const sidebarWidth = 180;
-  const boardX = sidebarWidth + 325 * (1196 / 1376);
-  const boardY = 250;
-  const boardWidth = 715 * (1196 / 1376);
-  const boardHeight = 365;
+  const { sidebarWidth, boardX, boardY, boardWidth, boardHeight } = GAME_CONFIG;
   const tileWidth = boardWidth / GAME_CONFIG.cols;
   const tileHeight = boardHeight / GAME_CONFIG.rows;
   const choices = Object.entries(TOWER_TYPES);
@@ -42,6 +40,20 @@ export function createGame(
           imageLoadFailed,
         );
       }
+      p.loadImage(
+        new URL("../images/symbols/sellbutton.png", import.meta.url).href,
+        (image) => {
+          sellButton.setImage(image);
+        },
+        imageLoadFailed,
+      );
+      p.loadImage(
+        new URL("../images/symbols/sellbutton-dark.png", import.meta.url).href,
+        (image) => {
+          sellButton.setActiveImage(image);
+        },
+        imageLoadFailed,
+      );
     }
 
     function imageLoadFailed() {
@@ -84,6 +96,8 @@ export function createGame(
       drawSidebar();
       drawPlacedTowers();
       drawPreview();
+      drawSellButton();
+      drawSellRefund();
     };
 
     function drawSidebar() {
@@ -159,8 +173,109 @@ export function createGame(
       p.pop();
     }
 
+    function drawSellButton() {
+      // Draw the large button
+      if (sellButton.isSellingMode() && sellButton.getActiveImage()) {
+        p.image(sellButton.getActiveImage(), p.width - 45, 45, 70, 70);
+      } else if (sellButton.getImage()) {
+        p.image(sellButton.getImage(), p.width - 45, 45, 70, 70);
+      }
+
+      // Draw the small cursor icon
+      if (sellButton.isSellingMode() && sellButton.getActiveImage()) {
+        p.image(
+          sellButton.getActiveImage(),
+          p.mouseX + 18,
+          p.mouseY + 18,
+          25,
+          25,
+        );
+      }
+    }
+
+    function drawSellRefund() {
+      if (!sellButton.isSellingMode()) return;
+
+      const col = Math.floor((p.mouseX - boardX) / tileWidth);
+      const row = Math.floor((p.mouseY - boardY) / tileHeight);
+
+      if (
+        col < 0 ||
+        col >= GAME_CONFIG.cols ||
+        row < 0 ||
+        row >= GAME_CONFIG.rows
+      )
+        return;
+
+      const tower = battlefield.placedUnits.find(
+        (tower) => tower.row === row && tower.col === col,
+      );
+
+      if (!tower) return;
+
+      const refund = Math.floor(TOWER_TYPES[tower.type].cost * 0.5);
+
+      p.push();
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(3);
+      p.textSize(16);
+      p.textAlign(p.LEFT, p.TOP);
+      p.text("Refund: " + refund + " Energy", p.mouseX + 20, p.mouseY + 40);
+      p.pop();
+    }
+
     p.mousePressed = () => {
       if (!imagesReady()) return;
+
+      // Check if sell button was clicked
+      if (p.mouseButton === p.LEFT && checkSellButtonClick()) {
+        sellButton.toggleSellingMode();
+        return;
+      }
+
+      // Right-click cancels selling mode
+      if (p.mouseButton === p.RIGHT) {
+        sellButton.cancelSellingMode();
+        battlefield.curUnit = null;
+        return;
+      }
+
+      if (p.mouseButton !== p.LEFT) return;
+
+      // Handle selling towers
+      if (sellButton.isSellingMode()) {
+        const col = Math.floor((p.mouseX - boardX) / tileWidth);
+        const row = Math.floor((p.mouseY - boardY) / tileHeight);
+
+        if (
+          col < 0 ||
+          col >= GAME_CONFIG.cols ||
+          row < 0 ||
+          row >= GAME_CONFIG.rows
+        )
+          return;
+
+        const index = battlefield.placedUnits.findIndex(
+          (tower) => tower.row === row && tower.col === col,
+        );
+
+        if (index === -1) return;
+
+        const tower = battlefield.placedUnits[index];
+
+        // Calculate 50% refund, rounded down
+        const refund = Math.floor(TOWER_TYPES[tower.type].cost * 0.5);
+
+        if (energy.removeTower(tower.id)) {
+          energy.addEnergy(refund);
+          battlefield.placedUnits.splice(index, 1);
+          sellButton.cancelSellingMode();
+        }
+
+        return;
+      }
+
       // DOM controls are handled by their own click listeners.
       if (
         p.mouseX < 0 ||
@@ -169,11 +284,6 @@ export function createGame(
         p.mouseY >= p.height
       )
         return;
-      if (p.mouseButton === p.RIGHT) {
-        battlefield.curUnit = null;
-        return;
-      }
-      if (p.mouseButton !== p.LEFT) return;
       for (let index = 0; index < choices.length; index++) {
         const [type, definition] = choices[index];
         const cardY = 160 + index * 115;
@@ -207,6 +317,15 @@ export function createGame(
       if (energy.placeTower(id, TOWER_TYPES[type])) {
         battlefield.placedUnits.push({ id, row, col, type });
         battlefield.curUnit = null;
+      }
+
+      function checkSellButtonClick() {
+        return (
+          p.mouseX >= p.width - 80 &&
+          p.mouseX <= p.width - 10 &&
+          p.mouseY >= 10 &&
+          p.mouseY <= 80
+        );
       }
     };
   });

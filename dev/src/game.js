@@ -26,8 +26,7 @@ export function createGame(
   const game = new window.p5((p) => {
     function loadImages() {
       p.loadImage(
-        new URL("../images/background/board.png", import.meta.url)
-          .href,
+        new URL("../images/background/board.png", import.meta.url).href,
         (image) => {
           backgroundImg = image;
         },

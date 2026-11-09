@@ -98,38 +98,36 @@ None known.
 
 ✏️ *Things we would like to do more often in future sprints.*
 
-- [Item]
-- [Item]
-- [Item]
+- Team meetings
+- Communication
+- Equal participation
 
 ### Less Of
 
 ✏️ *Things we would like to do less often in future sprints.*
 
-- [Item]
-- [Item]
-- [Item]
+- Waiting until the last day to merge/push
+- Merge conflicts
 
 ### Same As
 
 ✏️ *Things we are already doing well and want to keep doing.*
 
-- [Item]
-- [Item]
-- [Item]
+- Progress per sprint
+- Realistic goals
 
 ## 2.3 Team Summary
 
 ✏️ *In a few sentences, describe honestly how the team thinks the sprint went, beyond what is in the retrospective. Include what went well and any trouble you had. You will not lose points for reporting problems.*
 
-[Team summary]
+The sprint went well, and we have a lot to show for our progress this week. We had better communication and more participation from all members this time.
 
 ## 2.4 Retrospective Meeting Record
 
 | Field | Your answer |
 | --- | --- |
 | Date of retrospective meeting | 2026-11-09 |
-| Team members present | Daniel Colman, Sean Nguyen, Madison Jones, Kevin Bermingham |
+| Team members present | Daniel Colman, Sean Nguyen, Madison Jones, Kevin Bermingham, Nathaniel Amazigo |
 
 # Part 3: Self-Check Before Submitting
 

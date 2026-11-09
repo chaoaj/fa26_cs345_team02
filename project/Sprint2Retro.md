@@ -8,7 +8,7 @@
 | Team members | Sean Nguyen, Daniel Colman, Madison Jones, Kevin Bermingham, Nathaniel Amazigo |
 | Sprint | Sprint 2 |
 | Sprint dates | 2026-11-02 to 2026-11-09 |
-| Scrum Master for this sprint | [Name] |
+| Scrum Master for this sprint | Sean Nguyen |
 | Sprint Goal (copied exactly from your Sprint Plan) | Bring the unfinished board, tower definitions, and placement work from Sprint 1 into one playable build. By demo day, a player can choose any of the three basic towers, place it on an empty tile, and use Energy collected from an economy tower to afford another placement. |
 
 # Part 1: Sprint Review
@@ -48,10 +48,10 @@ At the Sprint Review you demonstrate your product to the stakeholder (your instr
 
 | # | Sprint Backlog Item | GitHub issue | Story points | All acceptance criteria met? | Final status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | [Item title] | #2 | 3 | Yes | Done |
-| 2 | [Item title] | #32 | 3 | Yes | Done |
-| 3 | [Item title] | #4 | 5 | Yes | Done |
-| 4 | [Item title] | #12 | 3 | Yes | Done |
+| 1 | Board and lanes | #2 | 3 | Yes | Done |
+| 2 | Tower types | #32 | 3 | Yes | Done |
+| 3 | Placement and costs | #4 | 5 | Yes | Done |
+| 4 | Selling and refunds | #12 | 3 | Yes | Done |
 | | **Totals** | | **14** | | **14 completed** |
 
 ### Items Not Completed
@@ -137,34 +137,11 @@ None known.
 
 | Grading question | Our answer |
 | --- | --- |
-| Is our sprint identical to what we started with? | [Yes / No] |
-| Did we complete our tasks? | [Yes / Partly / No] |
-| Did we complete our backlog items, as shown by their acceptance criteria? | [Yes / Partly / No] |
-| Did we meet our Sprint Goal? | [Yes / Partly / No] |
-| Is our code committed and pushed? | [Yes / No] |
-| Is our code free of large show-stopper bugs? | [Yes / No] |
+| Is our sprint identical to what we started with? | Yes |
+| Did we complete our tasks? | Yes |
+| Did we complete our backlog items, as shown by their acceptance criteria? | Yes |
+| Did we meet our Sprint Goal? | Yes |
+| Is our code committed and pushed? | Yes |
+| Is our code free of large show-stopper bugs? | Yes |
 | Did we write a reasonable retrospective (2–3 items in each category)? | [Yes / No] |
 | Did we write a thoughtful summary of our sprint? | [Yes / No] |
-
-## Example Retrospective (delete before submitting)
-
-### More Of
-
-- Regular meetings
-- Being on time
-
-### Less Of
-
-- Coding after midnight
-- Debug statements left in committed code
-
-### Same As
-
-- Respectful communication
-- Donuts
-
-**ScrumMaster:** Diana Prince
-
-**Commit ID:** 3f2a9c1e7b4d5a6f8e9c0b1a2d3e4f5a6b7c8d9e
-
-**Team summary:** We finished three of our four backlog items and met our Sprint Goal of a playable board. The scoreboard item slipped because we underestimated how long the HTML layout would take, and two of us were out sick midweek. Next sprint we will break large items into smaller tasks and check progress at a mid-sprint meeting.

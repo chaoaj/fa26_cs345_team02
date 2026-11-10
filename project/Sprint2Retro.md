@@ -4,36 +4,29 @@
 
 | Field | Your answer |
 | --- | --- |
-| Team name | Team 02 |
-| Team members | Sean Nguyen, Daniel Colman, Madison Jones, Kevin Bermingham, Nathaniel Amazigo |
+| Team name | 2 |
+| Team members | Madison Jones, Kevin Bermingham, Daniel Colman, Sean Nguyen, Nathaniel Amazigo |
 | Sprint | Sprint 2 |
 | Sprint dates | 2026-11-02 to 2026-11-09 |
 | Scrum Master for this sprint | Sean Nguyen |
 | Sprint Goal (copied exactly from your Sprint Plan) | Bring the unfinished board, tower definitions, and placement work from Sprint 1 into one playable build. By demo day, a player can choose any of the three basic towers, place it on an empty tile, and use Energy collected from an economy tower to afford another placement. |
 
-# Part 1: Sprint Review
+## Part 1: Sprint Review
 
-At the Sprint Review you demonstrate your product to the stakeholder (your instructor). The version you demonstrate must be committed and pushed to GitHub, and it must be identical to what is running at your production URL.
+The demonstrated version must be committed and pushed to GitHub and match the version running at the production URL.
 
-## 1.1 Product Increment
-
-✏️ *When your product is "ready" (see the checklist in 1.2), record the commit you will demonstrate.*
-
-✏️ *To find the commit ID:*
-- *In GitHub Desktop, open the **History** tab, select your latest commit, and copy its ID (right-click the commit and choose **Copy SHA**).*
-- *On GitHub.com, go to your repository, select **Commits**, and use the copy button next to the commit.*
-- *From a terminal in your repository, run `git rev-parse HEAD`.*
+### 1.1 Product Increment
 
 | Field | Your answer |
 | --- | --- |
-| Commit ID of the demonstrated product | 7105ac7be746978d0a4d174af3707596ec1e2576 |
-| Link to the commit on GitHub | https://github.com/chaoaj/fa26_cs345_team02/commit/ca72a5ed8655014f60b53f0540232272e9f2637a |
-| Production URL |https://chaoaj.github.io/fa26_cs345_team02/ |
-| Team member giving the demo | Sean Nguyen |
+| Commit ID of the demonstrated product | [Add the full SHA of the verified demo version] |
+| Link to the commit on GitHub | [Add the link to that commit] |
+| Production URL | https://chaoaj.github.io/fa26_cs345_team02/ |
+| Team member giving the demo | Sean Nguyen (planned) |
 
-## 1.2 "Ready for Review" Checklist
+The increment brings together the 5×10 battlefield, three basic tower types, tower placement, and selling with Energy refunds. It builds on the starting loadout and Energy collection completed in Sprint 1.
 
-✏️ *Change `[ ]` to `[x]` for each item that is true. Do not demo until every box is checked.*
+### 1.2 "Ready for Review" Checklist
 
 - [x] All of our tasks are marked done in GitHub Projects
 - [x] All of our Sprint Backlog Items meet their acceptance criteria
@@ -42,104 +35,96 @@ At the Sprint Review you demonstrate your product to the stakeholder (your instr
 - [x] The commit ID above matches the commit we are demonstrating
 - [x] Our demo person has the product loaded and ready to go
 
-## 1.3 Sprint Backlog Results
+The four backlog issues are shown as Done in the supplied project screenshot. Check the remaining task details and run the combined production walkthrough before checking these boxes.
 
-✏️ *List every Sprint Backlog Item that was in the sprint when it started. For each one, say whether every acceptance criterion was met.*
+### 1.3 Sprint Backlog Results
 
 | # | Sprint Backlog Item | GitHub issue | Story points | All acceptance criteria met? | Final status |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Board and lanes | #2 | 3 | Yes | Done |
-| 2 | Tower types | #32 | 3 | Yes | Done |
-| 3 | Placement and costs | #4 | 5 | Yes | Done |
-| 4 | Selling and refunds | #12 | 3 | Yes | Done |
-| | **Totals** | | **14** | | **14 completed** |
+| --- | --- | --- | ---: | --- | --- |
+| 1 | Create the 5×10 battlefield and lane layout | #2 | 3 | Pending final review verification | Done in GitHub Projects |
+| 2 | Add basic attacker, blocker, and economy tower types | #32 | 3 | Pending final review verification | Done in GitHub Projects |
+| 3 | Implement tower placement, costs, and cooldowns | #4 | 5 | Pending final review verification | Done in GitHub Projects |
+| 4 | Implement tower selling and Energy refunds | #12 | 3 | Pending final review verification | Done in GitHub Projects |
+| | **Totals** | | **14** | | **14 story points marked Done** |
 
-### Items Not Completed
+#### Items Not Completed
 
-✏️ *For each item that is not done, explain which acceptance criteria were not met and why. Write "None" if every item was completed.*
+None of the four Sprint 2 issues are shown as unfinished. Returning equipped gems to inventory remains a separate future item (#44), dependent on the gem inventory system; it is outside this sprint's reduced selling scope.
 
-None
+### 1.4 Sprint Scope
 
-## 1.4 Sprint Scope
+**Did the Sprint Backlog stay the same as it was at Sprint Planning?**
 
-✏️ *Your sprint should be identical to what you started with. Adding, removing, or editing Sprint Backlog Items during the sprint is not proper Scrum practice.*
+The plan listed #2, #32, and #4 as the core commitment, totaling 11 points, and #12 as a 3-point stretch item. The final sprint includes all four, totaling 14 points. Selling was therefore included alongside the core scope. Confirm whether it was committed at planning or pulled in during the sprint before submitting.
 
-**Did the Sprint Backlog stay the same as it was at Sprint Planning?** Yes
+Enemies, combat, waves, Gold, upgrades, and gem equipment remain outside this sprint's scope.
 
+### 1.5 Sprint Goal
 
-## 1.5 Sprint Goal
+**Did we meet our Sprint Goal?**
 
-**Did we meet our Sprint Goal?** Yes
+The completed issue statuses indicate that the planned board, tower choices, and placement work were delivered, along with the selling stretch item. Final confirmation requires demonstrating the whole loop in production: place an economy tower, collect Energy when ready, and spend it on another tower.
 
-We have a working product that meets all the required acceptance criteria and improves upon the product we had at the end of last sprint in significant ways.
+### 1.6 Known Bugs
 
-## 1.6 Known Bugs
+Earlier integration work exposed a green-screen failure when the battlefield image was unavailable during drawing, along with browser-test failures after the game setup changed. Fixes were made during integration. Verify those fixes in the final production version before recording them as resolved.
 
-✏️ *List any bugs you know about in the demonstrated version. Mark any that stop the product from working (a "show-stopper"). Write "None known" if there are none.*
+No additional bugs were supplied for this retrospective. Record any remaining bugs found during the final walkthrough here, including whether they block the demo.
 
-None known.
+## Part 2: Sprint Retrospective
 
-# Part 2: Sprint Retrospective
-
-## 2.1 Close Out the Sprint in GitHub Projects
-
-✏️ *Do these steps before your retrospective meeting.*
+### 2.1 Close Out the Sprint in GitHub Projects
 
 - [x] Every task we completed is marked done
 - [x] Every completed Sprint Backlog Item is moved to the **Done** (Closed) column, and its issue is closed
 - [x] Every unfinished item is left open with a comment explaining what is left
 - [x] The sprint is finished in GitHub Projects
 
-## 2.2 Retrospective: More Of, Less Of, Same As
+### 2.2 Retrospective: More Of, Less Of, Same As
 
-✏️ *Hold your retrospective meeting as a team. List two or three things in each category.*
 
-### More Of
+#### More Of
 
-✏️ *Things we would like to do more often in future sprints.*
+- Test everyone's changes together before demo day, using the same shared build.
+- Agree on shared board, tower, and Energy interfaces before editing overlapping files.
+- Give short progress updates and report merge or test failures early, with a named owner for the fix.
 
-- Team meetings
-- Communication
-- Equal participation
+#### Less Of
 
-### Less Of
+- Duplicate implementations of the same feature across separate branches.
+- Waiting until the end of the sprint to resolve conflicts and verify production.
+- Leaving integration, documentation, and troubleshooting concentrated on the Scrum Master.
 
-✏️ *Things we would like to do less often in future sprints.*
+#### Same As
 
-- Waiting until the last day to merge/push
-- Merge conflicts
+- Keep clear ownership of the board, tower definitions, and placement work.
+- Keep automated checks and update tests when agreed game behavior changes.
+- Keep small, visible player outcomes and separate future dependencies, such as gem returns, into their own issues.
 
-### Same As
+### 2.3 Team Summary
 
-✏️ *Things we are already doing well and want to keep doing.*
+Sprint 2 shows progress from Sprint 1: all three carried-over issues are now marked Done, and the team also completed the selling stretch item. This represents 14 points marked Done, compared with 8 points completed in Sprint 1. The work moves the project toward one shared building prototype instead of separate implementations.
 
-- Progress per sprint
-- Realistic goals
+Integration still required attention. Merge conflicts, the battlefield loading failure, and browser-test mismatches showed why finishing a feature on a branch is only part of delivery. We need to verify the combined game and its published version as part of completing each item.
 
-## 2.3 Team Summary
+For the next sprint, we propose a mid-sprint walkthrough of the shared build and a short production check before closing issues. Feature owners should help resolve integration failures so Sean can focus on Scrum Master coordination and documentation. The team should confirm these actions during the retrospective.
 
-✏️ *In a few sentences, describe honestly how the team thinks the sprint went, beyond what is in the retrospective. Include what went well and any trouble you had. You will not lose points for reporting problems.*
-
-The sprint went well, and we have a lot to show for our progress this week. We had better communication and more participation from all members this time.
-
-## 2.4 Retrospective Meeting Record
+### 2.4 Retrospective Meeting Record
 
 | Field | Your answer |
 | --- | --- |
-| Date of retrospective meeting | 2026-11-09 |
-| Team members present | Daniel Colman, Sean Nguyen, Madison Jones, Kevin Bermingham, Nathaniel Amazigo |
+| Date of retrospective meeting | 11-09-2026 |
+| Team members present | Everyone except Nathaniel Amazigo |
 
-# Part 3: Self-Check Before Submitting
-
-✏️ *These questions match how the sprint will be graded. Answer each one honestly.*
+## Part 3: Self-Check Before Submitting
 
 | Grading question | Our answer |
 | --- | --- |
 | Is our sprint identical to what we started with? | Yes |
-| Did we complete our tasks? | Yes |
-| Did we complete our backlog items, as shown by their acceptance criteria? | Yes |
+| Did we complete our tasks? | Apparently yes |
+| Did we complete our backlog items, as shown by their acceptance criteria? |Yes |
 | Did we meet our Sprint Goal? | Yes |
 | Is our code committed and pushed? | Yes |
 | Is our code free of large show-stopper bugs? | Yes |
-| Did we write a reasonable retrospective (2–3 items in each category)? | [Yes / No] |
-| Did we write a thoughtful summary of our sprint? | [Yes / No] |
+| Did we write a reasonable retrospective (2–3 items in each category)? | Yes |
+| Did we write a thoughtful summary of our sprint? | Yes|

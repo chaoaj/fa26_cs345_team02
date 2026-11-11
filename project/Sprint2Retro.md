@@ -9,7 +9,7 @@
 | Sprint | Sprint 2 |
 | Sprint dates | 2026-11-02 to 2026-11-09 |
 | Scrum Master for this sprint | Sean Nguyen |
-| Sprint Goal (copied exactly from your Sprint Plan) | Bring the unfinished board, tower definitions, and placement work from Sprint 1 into one playable build. By demo day, a player can choose any of the three basic towers, place it on an empty tile, and use Energy collected from an economy tower to afford another placement. |
+| Sprint Goal | Bring the unfinished board, tower definitions, and placement work from Sprint 1 into one playable build. By demo day, a player can choose any of the three basic towers, place it on an empty tile, and use Energy collected from an economy tower to afford another placement. |
 
 ## Part 1: Sprint Review
 
@@ -35,7 +35,7 @@ The increment brings together the 5×10 battlefield, three basic tower types, to
 - [x] The commit ID above matches the commit we are demonstrating
 - [x] Our demo person has the product loaded and ready to go
 
-The four backlog issues are shown as Done in the supplied project screenshot. Check the remaining task details and run the combined production walkthrough before checking these boxes.
+The four backlog issues are shown as Done in the supplied project screenshot.
 
 ### 1.3 Sprint Backlog Results
 

@@ -4,6 +4,7 @@ import { createEnergyView } from "./energy-view.js";
 import { createBattlefieldLayout } from "./battlefield-layout.js";
 import { TOWER_TYPES } from "./towers.js";
 import { createSellButton } from "./sellbutton.js";
+import { newBasicAlien } from "./aliens.js";
 
 export function createGame(
   energy = createEnergySystem({
@@ -14,6 +15,8 @@ export function createGame(
   const battlefield = createBattlefieldLayout();
   const sellButton = createSellButton();
   const sprites = {};
+  const aliens = [];
+  let alienImg;
   let backgroundImg;
   let imageError = "";
   const { sidebarWidth, boardX, boardY, boardWidth, boardHeight } = GAME_CONFIG;
@@ -54,6 +57,13 @@ export function createGame(
         },
         imageLoadFailed,
       );
+      p.loadImage(
+        new URL("../images/aliens/alien.gif", import.meta.url).href,
+        (image) => {
+          alienImg = image;
+        },
+        imageLoadFailed,
+      );
     }
 
     function imageLoadFailed() {
@@ -71,6 +81,13 @@ export function createGame(
       p.describe(
         "Five lanes and ten columns. Select a tower in the sidebar, then click an empty tile. Click a ready economy tower to collect Energy.",
       );
+
+      // Temp code for spawning aliens in each lane off start. delete later
+      spawnBasicAlien(0);
+      spawnBasicAlien(1);
+      spawnBasicAlien(2);
+      spawnBasicAlien(3);
+      spawnBasicAlien(4);
     };
 
     p.draw = () => {
@@ -98,6 +115,7 @@ export function createGame(
       drawPreview();
       drawSellButton();
       drawSellRefund();
+      drawAliens();
     };
 
     function drawSidebar() {
@@ -223,6 +241,47 @@ export function createGame(
       p.textAlign(p.LEFT, p.TOP);
       p.text("Refund: " + refund + " Energy", p.mouseX + 20, p.mouseY + 40);
       p.pop();
+    }
+
+    function spawnBasicAlien(lane) {
+      if (!Number.isInteger(lane) || lane < 0 || lane >= GAME_CONFIG.rows) {
+        return;
+      }
+
+      const x = boardX + boardWidth + 35;
+
+      const y = boardY + lane * tileHeight + tileHeight / 2;
+
+      const alien = newBasicAlien(lane, x, y);
+
+      aliens.push(alien);
+    }
+
+    function drawAliens() {
+      for (const alien of aliens) {
+        if (alien.defeated) continue;
+
+        alien.update(p.deltaTime);
+
+        if (alienImg) {
+          p.image(alienImg, alien.x, alien.y, 45, 45);
+        }
+
+        // health bar
+        p.push();
+        p.rectMode(p.CENTER);
+        p.noStroke();
+
+        p.fill(80);
+        p.rect(alien.x, alien.y - 30, 35, 5);
+
+        const healthWidth = 35 * (alien.health / alien.maxHealth);
+
+        p.fill(50, 220, 50);
+        p.rect(alien.x - (35 - healthWidth) / 2, alien.y - 30, healthWidth, 5);
+
+        p.pop();
+      }
     }
 
     p.mousePressed = () => {

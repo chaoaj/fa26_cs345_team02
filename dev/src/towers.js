@@ -9,7 +9,7 @@ export const TOWER_TYPES = {
     durability: 3,
     projectileDamage: 1,
     projectileSpeed: 1,
-    projectileFireRate: 1,
+    projectileFireRate: { intervalMs: 2500},
   },
   cocoon: {
     name: "Blocker",

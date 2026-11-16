@@ -18,13 +18,14 @@ export function createEnergyView(energy) {
   const list = root.querySelector(".energy-towers");
   const cards = new Map();
   let nextId = 1;
+  let runEnded = false;
   const choices = [ENERGY_CONFIG.economyTower, ENERGY_CONFIG.demoTower].map(
     (definition) => {
       const button = document.createElement("button");
       button.textContent = `Place ${definition.name.toLowerCase()} (${definition.cost} Energy)`;
       button.addEventListener("click", () => {
         // Demo placement only; PBI-03 will validate board tiles and provide their IDs.
-        if (energy.placeTower(`demo-${nextId}`, definition)) {
+        if (!runEnded && energy.placeTower(`demo-${nextId}`, definition)) {
           nextId++;
           status.textContent = `${definition.name} placed. Spent ${definition.cost} Energy.`;
         }
@@ -38,21 +39,21 @@ export function createEnergyView(energy) {
     const nextBalance = String(energy.getBalance());
     if (balance.value !== nextBalance) balance.value = nextBalance;
     for (const { button, definition } of choices) {
-      button.disabled = !energy.canAfford(definition.cost);
+      button.disabled = runEnded || !energy.canAfford(definition.cost);
     }
     for (const tower of energy.getTowers()) {
       let card = cards.get(tower.id);
       if (!card) {
         card = document.createElement("button");
         card.addEventListener("click", () => {
-          if (energy.collect(tower.id)) {
+          if (!runEnded && energy.collect(tower.id)) {
             status.textContent = `Collected ${tower.energyAmount} Energy.`;
           }
         });
         cards.set(tower.id, card);
         list.append(card);
       }
-      card.disabled = !tower.ready;
+      card.disabled = runEnded || !tower.ready;
       const label =
         tower.remainingMs === null
           ? `${tower.name} placed`
@@ -65,6 +66,12 @@ export function createEnergyView(energy) {
   const unsubscribe = energy.subscribe(update);
   return {
     update,
+    endRun() {
+      runEnded = true;
+      status.textContent =
+        "Defeat. An alien breached the base. Refresh to try again.";
+      update();
+    },
     destroy: () => {
       unsubscribe();
       root.remove();

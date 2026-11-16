@@ -19,6 +19,7 @@ export function createGame(
   let alienImg;
   let backgroundImg;
   let imageError = "";
+  let defeated = false;
   const { sidebarWidth, boardX, boardY, boardWidth, boardHeight } = GAME_CONFIG;
   const tileWidth = boardWidth / GAME_CONFIG.cols;
   const tileHeight = boardHeight / GAME_CONFIG.rows;
@@ -103,6 +104,15 @@ export function createGame(
         p.pop();
         return;
       }
+      for (const alien of aliens) {
+        if (alien.defeated) continue;
+        alien.update(p.deltaTime);
+        if (alien.x <= boardX) {
+          alien.x = boardX;
+          defeated = true;
+          break;
+        }
+      }
       p.image(
         backgroundImg,
         sidebarWidth + (p.width - sidebarWidth) / 2,
@@ -112,10 +122,29 @@ export function createGame(
       );
       drawSidebar();
       drawPlacedTowers();
-      drawPreview();
+      if (!defeated) drawPreview();
       drawSellButton();
       drawSellRefund();
       drawAliens();
+      if (defeated) {
+        view.endRun();
+        p.push();
+        p.noStroke();
+        p.fill(0, 190);
+        p.rect(0, 0, p.width, p.height);
+        p.fill(255);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(52);
+        p.text("Defeat", p.width / 2, p.height / 2 - 32);
+        p.textSize(22);
+        p.text(
+          "An alien breached the base. Refresh to try again.",
+          p.width / 2,
+          p.height / 2 + 24,
+        );
+        p.pop();
+        p.noLoop();
+      }
     };
 
     function drawSidebar() {
@@ -261,8 +290,6 @@ export function createGame(
       for (const alien of aliens) {
         if (alien.defeated) continue;
 
-        alien.update(p.deltaTime);
-
         if (alienImg) {
           p.image(alienImg, alien.x, alien.y, 45, 45);
         }
@@ -285,7 +312,7 @@ export function createGame(
     }
 
     p.mousePressed = () => {
-      if (!imagesReady()) return;
+      if (defeated || !imagesReady()) return;
 
       // Check if sell button was clicked
       if (p.mouseButton === p.LEFT && checkSellButtonClick()) {

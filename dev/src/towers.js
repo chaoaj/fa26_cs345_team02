@@ -8,7 +8,7 @@ export const TOWER_TYPES = {
     sprite: "butterfly.gif",
     durability: 3,
     projectileDamage: 1,
-    projectileSpeed: 1,
+    projectileSpeed: 5,
     projectileFireRate: { intervalMs: 2500},
   },
   cocoon: {

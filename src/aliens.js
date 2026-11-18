@@ -2,9 +2,9 @@ export const ALIEN_TYPES = {
   basic: {
     name: "Basic Alien",
     sprite: "alien.gif",
-    durability: 10,
+    durability: 2,
     damage: 1,
-    speed: 1,
+    speed: 0.2,
     attackInterval: 1000,
     goldReward: 5,
   },

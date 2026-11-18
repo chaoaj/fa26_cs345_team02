@@ -8,8 +8,8 @@ export const TOWER_TYPES = {
     sprite: "butterfly.gif",
     durability: 3,
     projectileDamage: 1,
-    projectileSpeed: 1,
-    projectileFireRate: 1,
+    projectileSpeed: 5,
+    projectileFireRate: { intervalMs: 2500 },
   },
   cocoon: {
     name: "Blocker",
@@ -24,6 +24,11 @@ export const TOWER_TYPES = {
   },
 };
 
+// Placeholder balance values: each fire-rate upgrade level shortens the delay
+// between shots by this much, but never below the floor.
+const FIRE_INTERVAL_STEP_MS = 250;
+const MIN_FIRE_INTERVAL_MS = 250;
+
 // Existing constructor names are retained for teammates adding combat later.
 export function newBasicAttacker(
   durabilityLevel = 0,
@@ -37,7 +42,14 @@ export function newBasicAttacker(
     durability: base.durability + durabilityLevel,
     projectileDamage: base.projectileDamage + damageLevel,
     projectileSpeed: base.projectileSpeed + speedLevel,
-    projectileFireRate: base.projectileFireRate + fireRateLevel,
+    projectileFireRate: {
+      ...base.projectileFireRate,
+      intervalMs: Math.max(
+        MIN_FIRE_INTERVAL_MS,
+        base.projectileFireRate.intervalMs -
+          fireRateLevel * FIRE_INTERVAL_STEP_MS,
+      ),
+    },
   };
 }
 

@@ -3,6 +3,9 @@ import { createEnergySystem } from "./energy.js";
 import { createEnergyView } from "./energy-view.js";
 import { createBattlefieldLayout } from "./battlefield-layout.js";
 import { TOWER_TYPES } from "./towers.js";
+import { createSellButton } from "./sellbutton.js";
+import { newBasicAlien } from "./aliens.js";
+import { tickAttackers, updateProjectiles } from "./projectiles.js";
 
 export function createGame(
   energy = createEnergySystem({
@@ -11,9 +14,14 @@ export function createGame(
 ) {
   const view = createEnergyView(energy);
   const battlefield = createBattlefieldLayout();
+  const sellButton = createSellButton();
   const sprites = {};
+  const aliens = [];
+  const projectiles = [];
+  let alienImg;
   let backgroundImg;
   let imageError = "";
+  let defeated = false;
   const { sidebarWidth, boardX, boardY, boardWidth, boardHeight } = GAME_CONFIG;
   const tileWidth = boardWidth / GAME_CONFIG.cols;
   const tileHeight = boardHeight / GAME_CONFIG.rows;
@@ -37,6 +45,27 @@ export function createGame(
           imageLoadFailed,
         );
       }
+      p.loadImage(
+        new URL("../images/symbols/sellbutton.png", import.meta.url).href,
+        (image) => {
+          sellButton.setImage(image);
+        },
+        imageLoadFailed,
+      );
+      p.loadImage(
+        new URL("../images/symbols/sellbutton-dark.png", import.meta.url).href,
+        (image) => {
+          sellButton.setActiveImage(image);
+        },
+        imageLoadFailed,
+      );
+      p.loadImage(
+        new URL("../images/aliens/alien.gif", import.meta.url).href,
+        (image) => {
+          alienImg = image;
+        },
+        imageLoadFailed,
+      );
     }
 
     function imageLoadFailed() {
@@ -54,6 +83,13 @@ export function createGame(
       p.describe(
         "Five lanes and ten columns. Select a tower in the sidebar, then click an empty tile. Click a ready economy tower to collect Energy.",
       );
+
+      // Temp code for spawning aliens in each lane off start. delete later
+      spawnBasicAlien(0);
+      spawnBasicAlien(1);
+      spawnBasicAlien(2);
+      spawnBasicAlien(3);
+      spawnBasicAlien(4);
     };
 
     p.draw = () => {
@@ -69,6 +105,16 @@ export function createGame(
         p.pop();
         return;
       }
+      for (const alien of aliens) {
+        if (alien.defeated) continue;
+        alien.update(p.deltaTime);
+        if (alien.x <= boardX) {
+          alien.x = boardX;
+          defeated = true;
+          break;
+        }
+      }
+      if (!defeated) updateAttacks();
       p.image(
         backgroundImg,
         sidebarWidth + (p.width - sidebarWidth) / 2,
@@ -78,8 +124,65 @@ export function createGame(
       );
       drawSidebar();
       drawPlacedTowers();
-      drawPreview();
+      if (!defeated) drawPreview();
+      drawSellButton();
+      drawSellRefund();
+      drawProjectiles();
+      drawAliens();
+      if (defeated) {
+        view.endRun();
+        p.push();
+        p.noStroke();
+        p.fill(0, 190);
+        p.rect(0, 0, p.width, p.height);
+        p.fill(255);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(52);
+        p.text("Defeat", p.width / 2, p.height / 2 - 32);
+        p.textSize(22);
+        p.text(
+          "An alien breached the base. Refresh to try again.",
+          p.width / 2,
+          p.height / 2 + 24,
+        );
+        p.pop();
+        p.noLoop();
+      }
     };
+
+    function tileCenter({ row, col }) {
+      return {
+        x: boardX + col * tileWidth + tileWidth / 2,
+        y: boardY + row * tileHeight + tileHeight / 2,
+      };
+    }
+
+    // Runs after aliens have moved this frame: attackers fire on their own
+    // timers, then projectiles move and resolve hits against the aliens.
+    function updateAttacks() {
+      const rightEdge = boardX + boardWidth;
+      projectiles.push(
+        ...tickAttackers({
+          units: battlefield.placedUnits,
+          towerTypes: TOWER_TYPES,
+          aliens,
+          deltaTime: p.deltaTime,
+          positionOf: tileCenter,
+          rightEdge,
+        }),
+      );
+      updateProjectiles(projectiles, aliens, p.deltaTime, rightEdge);
+    }
+
+    function drawProjectiles() {
+      p.push();
+      p.noStroke();
+      p.fill(255, 120, 200);
+      for (const projectile of projectiles) {
+        p.circle(projectile.x, projectile.y, 12);
+      }
+      p.pop();
+    }
 
     function drawSidebar() {
       p.noStroke();
@@ -154,8 +257,148 @@ export function createGame(
       p.pop();
     }
 
+    function drawSellButton() {
+      // Draw the large button
+      if (sellButton.isSellingMode() && sellButton.getActiveImage()) {
+        p.image(sellButton.getActiveImage(), p.width - 45, 45, 70, 70);
+      } else if (sellButton.getImage()) {
+        p.image(sellButton.getImage(), p.width - 45, 45, 70, 70);
+      }
+
+      // Draw the small cursor icon
+      if (sellButton.isSellingMode() && sellButton.getActiveImage()) {
+        p.image(
+          sellButton.getActiveImage(),
+          p.mouseX + 18,
+          p.mouseY + 18,
+          25,
+          25,
+        );
+      }
+    }
+
+    function drawSellRefund() {
+      if (!sellButton.isSellingMode()) return;
+
+      const col = Math.floor((p.mouseX - boardX) / tileWidth);
+      const row = Math.floor((p.mouseY - boardY) / tileHeight);
+
+      if (
+        col < 0 ||
+        col >= GAME_CONFIG.cols ||
+        row < 0 ||
+        row >= GAME_CONFIG.rows
+      )
+        return;
+
+      const tower = battlefield.placedUnits.find(
+        (tower) => tower.row === row && tower.col === col,
+      );
+
+      if (!tower) return;
+
+      const refund = Math.floor(TOWER_TYPES[tower.type].cost * 0.5);
+
+      p.push();
+      p.fill(255);
+      p.stroke(0);
+      p.strokeWeight(3);
+      p.textSize(16);
+      p.textAlign(p.LEFT, p.TOP);
+      p.text("Refund: " + refund + " Energy", p.mouseX + 20, p.mouseY + 40);
+      p.pop();
+    }
+
+    function spawnBasicAlien(lane) {
+      if (!Number.isInteger(lane) || lane < 0 || lane >= GAME_CONFIG.rows) {
+        return;
+      }
+
+      const x = boardX + boardWidth + 35;
+
+      const y = boardY + lane * tileHeight + tileHeight / 2;
+
+      const alien = newBasicAlien(lane, x, y);
+
+      aliens.push(alien);
+    }
+
+    function drawAliens() {
+      for (const alien of aliens) {
+        if (alien.defeated) continue;
+
+        if (alienImg) {
+          p.image(alienImg, alien.x, alien.y, 45, 45);
+        }
+
+        // health bar
+        p.push();
+        p.rectMode(p.CENTER);
+        p.noStroke();
+
+        p.fill(80);
+        p.rect(alien.x, alien.y - 30, 35, 5);
+
+        const healthWidth = 35 * (alien.health / alien.maxHealth);
+
+        p.fill(50, 220, 50);
+        p.rect(alien.x - (35 - healthWidth) / 2, alien.y - 30, healthWidth, 5);
+
+        p.pop();
+      }
+    }
+
     p.mousePressed = () => {
-      if (!imagesReady()) return;
+      if (defeated || !imagesReady()) return;
+
+      // Check if sell button was clicked
+      if (p.mouseButton === p.LEFT && checkSellButtonClick()) {
+        sellButton.toggleSellingMode();
+        return;
+      }
+
+      // Right-click cancels selling mode
+      if (p.mouseButton === p.RIGHT) {
+        sellButton.cancelSellingMode();
+        battlefield.curUnit = null;
+        return;
+      }
+
+      if (p.mouseButton !== p.LEFT) return;
+
+      // Handle selling towers
+      if (sellButton.isSellingMode()) {
+        const col = Math.floor((p.mouseX - boardX) / tileWidth);
+        const row = Math.floor((p.mouseY - boardY) / tileHeight);
+
+        if (
+          col < 0 ||
+          col >= GAME_CONFIG.cols ||
+          row < 0 ||
+          row >= GAME_CONFIG.rows
+        )
+          return;
+
+        const index = battlefield.placedUnits.findIndex(
+          (tower) => tower.row === row && tower.col === col,
+        );
+
+        if (index === -1) return;
+
+        const tower = battlefield.placedUnits[index];
+
+        // Calculate 50% refund, rounded down
+        const refund = Math.floor(TOWER_TYPES[tower.type].cost * 0.5);
+
+        if (energy.removeTower(tower.id)) {
+          energy.addEnergy(refund);
+          battlefield.placedUnits.splice(index, 1);
+          sellButton.cancelSellingMode();
+        }
+
+        return;
+      }
+
       // DOM controls are handled by their own click listeners.
       if (
         p.mouseX < 0 ||
@@ -164,11 +407,6 @@ export function createGame(
         p.mouseY >= p.height
       )
         return;
-      if (p.mouseButton === p.RIGHT) {
-        battlefield.curUnit = null;
-        return;
-      }
-      if (p.mouseButton !== p.LEFT) return;
       for (let index = 0; index < choices.length; index++) {
         const [type, definition] = choices[index];
         const cardY = 160 + index * 115;
@@ -202,6 +440,15 @@ export function createGame(
       if (energy.placeTower(id, TOWER_TYPES[type])) {
         battlefield.placedUnits.push({ id, row, col, type });
         battlefield.curUnit = null;
+      }
+
+      function checkSellButtonClick() {
+        return (
+          p.mouseX >= p.width - 80 &&
+          p.mouseX <= p.width - 10 &&
+          p.mouseY >= 10 &&
+          p.mouseY <= 80
+        );
       }
     };
   });

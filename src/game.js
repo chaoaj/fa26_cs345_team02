@@ -5,6 +5,7 @@ import { createBattlefieldLayout } from "./battlefield-layout.js";
 import { TOWER_TYPES } from "./towers.js";
 import { createSellButton } from "./sellbutton.js";
 import { newBasicAlien } from "./aliens.js";
+import { tickAttackers, updateProjectiles } from "./projectiles.js";
 
 export function createGame(
   energy = createEnergySystem({
@@ -16,6 +17,7 @@ export function createGame(
   const sellButton = createSellButton();
   const sprites = {};
   const aliens = [];
+  const projectiles = [];
   let alienImg;
   let backgroundImg;
   let imageError = "";
@@ -113,6 +115,7 @@ export function createGame(
           break;
         }
       }
+      if (!defeated) updateAttacks();
       p.image(
         backgroundImg,
         sidebarWidth + (p.width - sidebarWidth) / 2,
@@ -125,6 +128,7 @@ export function createGame(
       if (!defeated) drawPreview();
       drawSellButton();
       drawSellRefund();
+      drawProjectiles();
       drawAliens();
       if (defeated) {
         view.endRun();
@@ -146,6 +150,40 @@ export function createGame(
         p.noLoop();
       }
     };
+
+    function tileCenter({ row, col }) {
+      return {
+        x: boardX + col * tileWidth + tileWidth / 2,
+        y: boardY + row * tileHeight + tileHeight / 2,
+      };
+    }
+
+    // Runs after aliens have moved this frame: attackers fire on their own
+    // timers, then projectiles move and resolve hits against the aliens.
+    function updateAttacks() {
+      const rightEdge = boardX + boardWidth;
+      projectiles.push(
+        ...tickAttackers({
+          units: battlefield.placedUnits,
+          towerTypes: TOWER_TYPES,
+          aliens,
+          deltaTime: p.deltaTime,
+          positionOf: tileCenter,
+          rightEdge,
+        }),
+      );
+      updateProjectiles(projectiles, aliens, p.deltaTime, rightEdge);
+    }
+
+    function drawProjectiles() {
+      p.push();
+      p.noStroke();
+      p.fill(255, 120, 200);
+      for (const projectile of projectiles) {
+        p.circle(projectile.x, projectile.y, 12);
+      }
+      p.pop();
+    }
 
     function drawSidebar() {
       p.noStroke();

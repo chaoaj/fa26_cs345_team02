@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { ALIEN_TYPES } from "../src/aliens.js";
 import { GAME_CONFIG } from "../src/config.js";
 
 test("a base breach immediately ends the run and locks game controls", async ({
@@ -28,14 +29,20 @@ test("a base breach immediately ends the run and locks game controls", async ({
       }, GAME_CONFIG.width),
     )
     .toEqual([215, 215, 165, 255]);
-  await page.clock.fastForward(8_000);
+  // Alien speed is measured in pixels per frame at 60 frames per second.
+  const pixelsPerSecond = ALIEN_TYPES.basic.speed * 60;
+  const halfwayAcrossBoardMs =
+    (GAME_CONFIG.boardWidth / 2 / pixelsPerSecond) * 1000;
+  await page.clock.fastForward(Math.floor(halfwayAcrossBoardMs));
   await expect(status).toHaveCount(0);
   await expect(placeTower).toBeEnabled();
 
   // Select a tower before the breach so a later board click could spend Energy.
   await canvas.click({ position: { x: 90, y: 160 } });
   const previousBalance = await balance.textContent();
-  await page.clock.fastForward(4_000);
+  // A full canvas width covers the remaining travel, including the spawn margin.
+  const acrossCanvasMs = (GAME_CONFIG.width / pixelsPerSecond) * 1000;
+  await page.clock.fastForward(Math.ceil(acrossCanvasMs));
   await expect(status).toHaveText(/alien breached the base/i);
   await expect(placeTower).toBeDisabled();
   const ended = await page.evaluate(readGame);
